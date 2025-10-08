@@ -1,0 +1,3383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Complete MERN Stack Handbook</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .download-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #27ae60;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .download-btn:hover {
+            background: #229954;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(39, 174, 96, 0.6);
+        }
+        
+        .download-btn:active {
+            transform: translateY(0);
+        }
+        
+        #content {
+            padding: 60px;
+        }
+        
+        .cover {
+            text-align: center;
+            padding: 100px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .cover h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .cover .subtitle {
+            font-size: 24px;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+        
+        .cover .tech-stack {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            font-size: 20px;
+            margin-top: 40px;
+        }
+        
+        .cover .tech-item {
+            background: rgba(255,255,255,0.2);
+            padding: 15px 25px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            font-size: 36px;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        h2 {
+            color: #34495e;
+            font-size: 28px;
+            margin: 30px 0 15px;
+            padding-left: 15px;
+            border-left: 5px solid #764ba2;
+        }
+        
+        h3 {
+            color: #555;
+            font-size: 22px;
+            margin: 25px 0 12px;
+        }
+        
+        p {
+            margin: 15px 0;
+            text-align: justify;
+        }
+        
+        .code-block {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            border-left: 4px solid #667eea;
+        }
+        
+        .code-block .comment {
+            color: #5c6370;
+        }
+        
+        .code-block .keyword {
+            color: #c678dd;
+        }
+        
+        .code-block .string {
+            color: #98c379;
+        }
+        
+        .code-block .function {
+            color: #61afef;
+        }
+        
+        .note {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .note strong {
+            color: #856404;
+        }
+        
+        .tip {
+            background: #d1ecf1;
+            border-left: 5px solid #17a2b8;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .tip strong {
+            color: #0c5460;
+        }
+        
+        .warning {
+            background: #f8d7da;
+            border-left: 5px solid #dc3545;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .warning strong {
+            color: #721c24;
+        }
+        
+        .diagram {
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 25px 0;
+            text-align: center;
+            font-family: monospace;
+        }
+        
+        .flow-arrow {
+            font-size: 24px;
+            color: #667eea;
+            margin: 10px 0;
+        }
+        
+        .toc {
+            background: #f8f9fa;
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 8px;
+            border: 2px solid #dee2e6;
+        }
+        
+        .toc h2 {
+            border: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+        
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .toc li {
+            padding: 8px 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .toc li:last-child {
+            border-bottom: none;
+        }
+        
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 40px;
+        }
+        
+        li {
+            margin: 8px 0;
+        }
+        
+        .chapter-number {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        td {
+            padding: 12px;
+            border: 1px solid #dee2e6;
+        }
+        
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .section-break {
+            height: 2px;
+            background: linear-gradient(to right, transparent, #667eea, transparent);
+            margin: 50px 0;
+        }
+    </style>
+</head>
+<body>
+    <button class="download-btn" onclick="downloadPDF()">📥 Download as PDF</button>
+    
+    <div class="container">
+        <div class="cover">
+            <h1>The Complete MERN Stack Handbook</h1>
+            <div class="subtitle">From Basics to Production-Ready Applications</div>
+            <div class="tech-stack">
+                <div class="tech-item">MongoDB</div>
+                <div class="tech-item">Express.js</div>
+                <div class="tech-item">React</div>
+                <div class="tech-item">Node.js</div>
+            </div>
+            <p style="margin-top: 60px; font-size: 18px;">A comprehensive guide to building full-stack JavaScript applications</p>
+        </div>
+        
+        <div id="content">
+            <div class="toc">
+                <h2>Table of Contents</h2>
+                <ul>
+                    <li><span class="chapter-number">Chapter 1:</span> Understanding the MERN Architecture</li>
+                    <li><span class="chapter-number">Chapter 2:</span> Setting Up Your Development Environment</li>
+                    <li><span class="chapter-number">Chapter 3:</span> Building Your First Express API</li>
+                    <li><span class="chapter-number">Chapter 4:</span> MongoDB Integration & Data Modeling</li>
+                    <li><span class="chapter-number">Chapter 5:</span> Complete CRUD Operations</li>
+                    <li><span class="chapter-number">Chapter 6:</span> Building the React Frontend</li>
+                    <li><span class="chapter-number">Chapter 7:</span> Connecting Frontend to Backend</li>
+                    <li><span class="chapter-number">Chapter 8:</span> Authentication & Authorization (JWT)</li>
+                    <li><span class="chapter-number">Chapter 9:</span> File Upload & Management</li>
+                    <li><span class="chapter-number">Chapter 10:</span> Advanced Features (Pagination, Search, Filtering)</li>
+                    <li><span class="chapter-number">Chapter 11:</span> Error Handling & Validation</li>
+                    <li><span class="chapter-number">Chapter 12:</span> Testing Your Application</li>
+                    <li><span class="chapter-number">Chapter 13:</span> Deployment & Production Best Practices</li>
+                    <li><span class="chapter-number">Chapter 14:</span> Performance Optimization</li>
+                    <li><span class="chapter-number">Chapter 15:</span> Real-World Project: Building a Blog Platform</li>
+                </ul>
+            </div>
+
+            <h1>Chapter 1: Understanding the MERN Architecture</h1>
+            
+            <h2>1.1 What is MERN?</h2>
+            <p>MERN is a full-stack JavaScript framework that consists of four powerful technologies working together to create modern web applications. The acronym stands for MongoDB, Express.js, React, and Node.js. What makes MERN special is that you use JavaScript throughout the entire stack—from database queries to server logic to user interface.</p>
+            
+            <h3>The Four Pillars of MERN</h3>
+            
+            <p><strong>MongoDB:</strong> A NoSQL database that stores data in flexible, JSON-like documents. Unlike traditional relational databases with rigid schemas, MongoDB allows you to iterate quickly and store data in a format that naturally maps to JavaScript objects.</p>
+            
+            <p><strong>Express.js:</strong> A minimal and flexible Node.js web application framework that provides a robust set of features for building web and mobile applications. It simplifies the process of building server-side applications and APIs.</p>
+            
+            <p><strong>React:</strong> A JavaScript library for building user interfaces, particularly single-page applications. React uses a component-based architecture and a virtual DOM for efficient rendering, making it perfect for creating dynamic, responsive user experiences.</p>
+            
+            <p><strong>Node.js:</strong> A JavaScript runtime built on Chrome's V8 engine that allows you to run JavaScript on the server. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient.</p>
+
+            <div class="diagram">
+                <div style="font-size: 18px; font-weight: bold; margin-bottom: 20px;">MERN Stack Architecture</div>
+                <div style="background: #667eea; color: white; padding: 15px; border-radius: 5px; margin: 10px 0;">
+                    React (Frontend)
+                </div>
+                <div class="flow-arrow">↓ HTTP Requests (REST API) ↓</div>
+                <div style="background: #764ba2; color: white; padding: 15px; border-radius: 5px; margin: 10px 0;">
+                    Express.js (Backend Framework)
+                </div>
+                <div class="flow-arrow">↓ Running on ↓</div>
+                <div style="background: #27ae60; color: white; padding: 15px; border-radius: 5px; margin: 10px 0;">
+                    Node.js (JavaScript Runtime)
+                </div>
+                <div class="flow-arrow">↓ Queries & Updates ↓</div>
+                <div style="background: #e74c3c; color: white; padding: 15px; border-radius: 5px; margin: 10px 0;">
+                    MongoDB (Database)
+                </div>
+            </div>
+
+            <h2>1.2 How the Stack Works Together</h2>
+            
+            <p>Understanding the data flow in a MERN application is crucial. Here's how a typical request-response cycle works:</p>
+            
+            <ol>
+                <li><strong>User Interaction:</strong> A user interacts with the React frontend (clicks a button, submits a form, etc.)</li>
+                <li><strong>HTTP Request:</strong> React sends an HTTP request (GET, POST, PUT, DELETE) to the Express backend API</li>
+                <li><strong>Route Handling:</strong> Express receives the request and routes it to the appropriate handler function</li>
+                <li><strong>Business Logic:</strong> The handler executes business logic, often interacting with MongoDB through Mongoose</li>
+                <li><strong>Database Operations:</strong> MongoDB performs the requested operation (create, read, update, delete)</li>
+                <li><strong>Response:</strong> Express sends a JSON response back to React</li>
+                <li><strong>UI Update:</strong> React updates the user interface based on the response</li>
+            </ol>
+
+            <div class="note">
+                <strong>Note:</strong> The beauty of MERN is that data flows as JSON throughout the entire stack. MongoDB stores BSON (Binary JSON), Express and Node work with JavaScript objects, and React components receive and display JSON data. This consistency eliminates the need for data transformation between layers.
+            </div>
+
+            <h2>1.3 Why Choose MERN?</h2>
+            
+            <p><strong>JavaScript Everywhere:</strong> Using one language across the stack reduces context switching and allows developers to share code between frontend and backend. You can even use the same validation logic on both sides.</p>
+            
+            <p><strong>JSON All the Way:</strong> Data flows naturally as JSON from database to client, minimizing transformation overhead and making APIs intuitive.</p>
+            
+            <p><strong>Strong Community & Ecosystem:</strong> Each technology in the stack has a massive community, extensive documentation, and thousands of npm packages that solve common problems.</p>
+            
+            <p><strong>Scalability:</strong> Node.js's non-blocking architecture handles concurrent requests efficiently, MongoDB scales horizontally, and React's component model promotes code reusability.</p>
+            
+            <p><strong>Fast Development:</strong> Hot reloading, rich tooling, and code reusability mean you can build and iterate quickly.</p>
+
+            <div class="section-break"></div>
+
+            <h1>Chapter 2: Setting Up Your Development Environment</h1>
+            
+            <h2>2.1 Required Software</h2>
+            
+            <p>Before we start building, let's ensure your development environment is properly configured.</p>
+            
+            <h3>Node.js and npm</h3>
+            <p>Node.js comes with npm (Node Package Manager) which we'll use to install all dependencies. Download the LTS (Long Term Support) version from nodejs.org.</p>
+            
+            <div class="code-block">
+# Verify installation
+node --version
+npm --version
+            </div>
+
+            <h3>MongoDB</h3>
+            <p>You have two options for MongoDB:</p>
+            <ul>
+                <li><strong>MongoDB Atlas (Recommended for beginners):</strong> A cloud-hosted MongoDB service with a free tier. No local installation needed.</li>
+                <li><strong>Local MongoDB:</strong> Download MongoDB Community Server from mongodb.com for local development.</li>
+            </ul>
+
+            <h3>Code Editor</h3>
+            <p>Visual Studio Code is highly recommended. Install these essential extensions:</p>
+            <ul>
+                <li>ES7+ React/Redux/React-Native snippets</li>
+                <li>ESLint</li>
+                <li>Prettier - Code formatter</li>
+                <li>MongoDB for VS Code</li>
+                <li>Thunder Client or REST Client (for API testing)</li>
+            </ul>
+
+            <h3>Additional Tools</h3>
+            <ul>
+                <li><strong>Postman or Insomnia:</strong> For testing APIs</li>
+                <li><strong>Git:</strong> Version control system</li>
+                <li><strong>Chrome DevTools:</strong> For debugging React applications</li>
+            </ul>
+
+            <h2>2.2 Project Structure</h2>
+            
+            <p>A well-organized project structure is crucial for maintainability. Here's our recommended structure:</p>
+
+            <div class="code-block">
+mern-project/
+│
+├── client/                 # React frontend
+│   ├── public/
+│   ├── src/
+│   │   ├── components/    # Reusable components
+│   │   ├── pages/         # Page components
+│   │   ├── services/      # API calls
+│   │   ├── context/       # React Context
+│   │   ├── hooks/         # Custom hooks
+│   │   ├── utils/         # Helper functions
+│   │   ├── App.js
+│   │   └── index.js
+│   └── package.json
+│
+├── server/                 # Node.js backend
+│   ├── config/            # Configuration files
+│   ├── controllers/       # Route controllers
+│   ├── models/            # Mongoose models
+│   ├── routes/            # API routes
+│   ├── middleware/        # Custom middleware
+│   ├── utils/             # Helper functions
+│   ├── server.js          # Entry point
+│   └── package.json
+│
+└── README.md
+            </div>
+
+            <div class="tip">
+                <strong>Tip:</strong> Keep frontend and backend in separate directories. This separation makes deployment easier and allows different teams to work independently.
+            </div>
+
+            <h2>2.3 Creating Your First Project</h2>
+
+            <h3>Backend Setup</h3>
+            <div class="code-block">
+# Create project directory
+mkdir mern-project
+cd mern-project
+
+# Create backend
+mkdir server
+cd server
+npm init -y
+
+# Install dependencies
+npm install express mongoose dotenv cors
+npm install nodemon --save-dev
+            </div>
+
+            <p><strong>Package Explanations:</strong></p>
+            <ul>
+                <li><strong>express:</strong> Web framework for Node.js</li>
+                <li><strong>mongoose:</strong> MongoDB object modeling tool</li>
+                <li><strong>dotenv:</strong> Loads environment variables from .env file</li>
+                <li><strong>cors:</strong> Enables Cross-Origin Resource Sharing</li>
+                <li><strong>nodemon:</strong> Auto-restarts server when files change (dev only)</li>
+            </ul>
+
+            <h3>Frontend Setup</h3>
+            <div class="code-block">
+# From project root
+npx create-react-app client
+cd client
+
+# Install additional packages
+npm install axios react-router-dom
+            </div>
+
+            <p><strong>Package Explanations:</strong></p>
+            <ul>
+                <li><strong>axios:</strong> Promise-based HTTP client for API calls</li>
+                <li><strong>react-router-dom:</strong> Routing library for React</li>
+            </ul>
+
+            <div class="section-break"></div>
+
+            <h1>Chapter 3: Building Your First Express API</h1>
+
+            <h2>3.1 Creating the Server</h2>
+            
+            <p>Let's create our Express server. Create <code>server.js</code> in the server directory:</p>
+
+            <div class="code-block">
+<span class="comment">// server/server.js</span>
+<span class="keyword">const</span> express = <span class="function">require</span>(<span class="string">'express'</span>);
+<span class="keyword">const</span> cors = <span class="function">require</span>(<span class="string">'cors'</span>);
+<span class="keyword">const</span> dotenv = <span class="function">require</span>(<span class="string">'dotenv'</span>);
+
+<span class="comment">// Load environment variables</span>
+dotenv.<span class="function">config</span>();
+
+<span class="comment">// Initialize Express app</span>
+<span class="keyword">const</span> app = <span class="function">express</span>();
+
+<span class="comment">// Middleware</span>
+app.<span class="function">use</span>(<span class="function">cors</span>());  <span class="comment">// Enable CORS</span>
+app.<span class="function">use</span>(express.<span class="function">json</span>());  <span class="comment">// Parse JSON bodies</span>
+app.<span class="function">use</span>(express.<span class="function">urlencoded</span>({ extended: <span class="keyword">true</span> }));  <span class="comment">// Parse URL-encoded bodies</span>
+
+<span class="comment">// Basic route</span>
+app.<span class="function">get</span>(<span class="string">'/'</span>, (req, res) => {
+    res.<span class="function">json</span>({ message: <span class="string">'Welcome to MERN API'</span> });
+});
+
+<span class="comment">// Start server</span>
+<span class="keyword">const</span> PORT = process.env.PORT || <span class="string">5000</span>;
+app.<span class="function">listen</span>(PORT, () => {
+    console.<span class="function">log</span>(<span class="string">`Server running on port ${PORT}`</span>);
+});
+            </div>
+
+            <h2>3.2 Understanding Middleware</h2>
+            
+            <p>Middleware functions are functions that have access to the request object (req), response object (res), and the next middleware function. They can:</p>
+            <ul>
+                <li>Execute any code</li>
+                <li>Make changes to request and response objects</li>
+                <li>End the request-response cycle</li>
+                <li>Call the next middleware in the stack</li>
+            </ul>
+
+            <div class="code-block">
+<span class="comment">// Custom middleware example</span>
+<span class="keyword">const</span> <span class="function">logger</span> = (req, res, next) => {
+    console.<span class="function">log</span>(<span class="string">`${req.method} ${req.path} - ${<span class="keyword">new</span> Date().<span class="function">toISOString</span>()}`</span>);
+    <span class="function">next</span>();  <span class="comment">// Call next middleware</span>
+};
+
+app.<span class="function">use</span>(logger);
+            </div>
+
+            <h2>3.3 Routing</h2>
+            
+            <p>Express provides a clean way to organize routes. Create <code>routes/items.js</code>:</p>
+
+            <div class="code-block">
+<span class="comment">// server/routes/items.js</span>
+<span class="keyword">const</span> express = <span class="function">require</span>(<span class="string">'express'</span>);
+<span class="keyword">const</span> router = express.<span class="function">Router</span>();
+
+<span class="comment">// GET all items</span>
+router.<span class="function">get</span>(<span class="string">'/'</span>, (req, res) => {
+    res.<span class="function">json</span>({ message: <span class="string">'Get all items'</span> });
+});
+
+<span class="comment">// GET single item</span>
+router.<span class="function">get</span>(<span class="string">'/:id'</span>, (req, res) => {
+    <span class="keyword">const</span> { id } = req.params;
+    res.<span class="function">json</span>({ message: <span class="string">`Get item ${id}`</span> });
+});
+
+<span class="comment">// POST new item</span>
+router.<span class="function">post</span>(<span class="string">'/'</span>, (req, res) => {
+    <span class="keyword">const</span> data = req.body;
+    res.<span class="function">status</span>(<span class="string">201</span>).<span class="function">json</span>({ message: <span class="string">'Item created'</span>, data });
+});
+
+<span class="comment">// PUT update item</span>
+router.<span class="function">put</span>(<span class="string">'/:id'</span>, (req, res) => {
+    <span class="keyword">const</span> { id } = req.params;
+    <span class="keyword">const</span> data = req.body;
+    res.<span class="function">json</span>({ message: <span class="string">`Item ${id} updated`</span>, data });
+});
+
+<span class="comment">// DELETE item</span>
+router.<span class="function">delete</span>(<span class="string">'/:id'</span>, (req, res) => {
+    <span class="keyword">const</span> { id } = req.params;
+    res.<span class="function">json</span>({ message: <span class="string">`Item ${id} deleted`</span> });
+});
+
+module.exports = router;
+            </div>
+
+            <p>Now import this router in <code>server.js</code>:</p>
+
+            <div class="code-block">
+<span class="comment">// server/server.js</span>
+<span class="keyword">const</span> itemsRouter = <span class="function">require</span>(<span class="string">'./routes/items'</span>);
+
+<span class="comment">// Use routes</span>
+app.<span class="function">use</span>(<span class="string">'/api/items'</span>, itemsRouter);
+            </div>
+
+            <div class="note">
+                <strong>Note:</strong> The <code>/api</code> prefix is a convention that makes it clear these are API endpoints, not webpage routes. It also makes deployment and nginx configuration easier.
+            </div>
+
+            <h2>3.4 Environment Variables</h2>
+            
+            <p>Create a <code>.env</code> file in the server directory:</p>
+
+            <div class="code-block">
+PORT=5000
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_secret_key_here
+NODE_ENV=development
+            </div>
+
+            <div class="warning">
+                <strong>Warning:</strong> Never commit .env files to version control! Add .env to your .gitignore file immediately.
+            </div>
+
+            <div class="section-break"></div>
+
+            <h1>Chapter 4: MongoDB Integration & Data Modeling</h1>
+
+            <h2>4.1 Connecting to MongoDB</h2>
+            
+            <p>Create <code>config/database.js</code>:</p>
+
+            <div class="code-block">
+<span class="comment">// server/config/database.js</span>
+<span class="keyword">const</span> mongoose = <span class="function">require</span>(<span class="string">'mongoose'</span>);
+
+<span class="keyword">const</span> <span class="function">connectDB</span> = <span class="keyword">async</span> () => {
+    <span class="keyword">try</span> {
+        <span class="keyword">await</span> mongoose.<span class="function">connect</span>(process.env.MONGODB_URI, {
+            useNewUrlParser: <span class="keyword">true</span>,
+            useUnifiedTopology: <span class="keyword">true</span>,
+        });
+        console.<span class="function">log</span>(<span class="string">'MongoDB Connected Successfully'</span>);
+    } <span class="keyword">catch</span> (error) {
+        console.<span class="function">error</span>(<span class="string">'MongoDB Connection Error:'</span>, error);
+        process.<span class="function">exit</span>(<span class="string">1</span>);
+    }
+};
+
+module.exports = connectDB;
+            </div>
+
+            <p>Update <code>server.js</code> to use this connection:</p>
+
+            <div class="code-block">
+<span class="keyword">const</span> connectDB = <span class="function">require</span>(<span class="string">'./config/database'</span>);
+
+<span class="comment">// Connect to database</span>
+<span class="function">connectDB</span>();
+            </div>
+
+            <h2>4.2 Understanding Mongoose Schemas</h2>
+            
+            <p>Mongoose provides a schema-based solution to model your data. A schema defines the structure of documents within a collection.</p>
+
+            <div class="code-block">
+<span class="comment">// server/models/Item.js</span>
+<span class="keyword">const</span> mongoose = <span class="function">require</span>(<span class="string">'mongoose'</span>);
+
+<span class="keyword">const</span> itemSchema = <span class="keyword">new</span> mongoose.<span class="function">Schema</span>({
+    name: {
+        type: String,
+        required: [<span class="keyword">true</span>, <span class="string">'Name is required'</span>],
+        trim: <span class="keyword">true</span>,
+        minlength: [<span class="string">3</span>, <span class="string">'Name must be at least 3 characters'</span>],
+        maxlength: [<span class="string">100</span>, <span class="string">'Name cannot exceed 100 characters'</span>]
+    },
+    description: {
+        type: String,
+        required: <span class="keyword">true</span>,
+        trim: <span class="keyword">true</span>
+    },
+    price: {
+        type: Number,
+        required: <span class="keyword">true</span>,
+        min: [<span class="string">0</span>, <span class="string">'Price cannot be negative'</span>]
+    },
+    category: {
+        type: String,
+        required: <span class="keyword">true</span>,
+        enum: [<span class="string">'Electronics'</span>, <span class="string">'Clothing'</span>, <span class="string">'Books'</span>, <span class="string">'Food'</span>, <span class="string">'Other'</span>]
+    },
+    inStock: {
+        type: Boolean,
+        default: <span class="keyword">true</span>
+    },
+    tags: [String],
+    createdBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: <span class="string">'User'</span>
+    }
+}, {
+    timestamps: <span class="keyword">true</span>  <span class="comment">// Adds createdAt and updatedAt</span>
+});
+
+<span class="comment">// Virtual property (not stored in DB)</span>
+itemSchema.<span class="function">virtual</span>(<span class="string">'priceWithTax'</span>).<span class="function">get</span>(<span class="keyword">function</span>() {
+    <span class="keyword">return</span> <span class="keyword">this</span>.price * <span class="string">1.15</span>;
+});
+
+<span class="comment">// Instance method</span>
+itemSchema.methods.<span class="function">toggleStock</span> = <span class="keyword">function</span>() {
+    <span class="keyword">this</span>.inStock = !<span class="keyword">this</span>.inStock;
+    <span class="keyword">return</span> <span class="keyword">this</span>.<span class="function">save</span>();
+};
+
+<span class="comment">// Static method</span>
+itemSchema.statics.<span class="function">findByCategory</span> = <span class="keyword">function</span>(category) {
+    <span class="keyword">return</span> <span class="keyword">this</span>.<span class="function">find</span>({ category });
+};
+
+<span class="comment">// Middleware (runs before save)</span>
+itemSchema.<span class="function">pre</span>(<span class="string">'save'</span>, <span class="keyword">function</span>(next) {
+    console.<span class="function">log</span>(<span class="string">'About to save item:'</span>, <span class="keyword">this</span>.name);
+    <span class="function">next</span>();
+});
+
+module.exports = mongoose.<span class="function">model</span>(<span class="string">'Item'</span>, itemSchema);
+            </div>
+
+            <h3>Schema Types and Validation</h3>
+            <table>
+                <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Validators</th>
+                </tr>
+                <tr>
+                    <td>String</td>
+                    <td>Text data</td>
+                    <td>minlength, maxlength, match, enum, trim, lowercase, uppercase</td>
+                </tr>
+                <tr>
+                    <td>Number</td>
+                    <td>Numeric data</td>
+                    <td>min, max</td>
+                </tr>
+                <tr>
+                    <td>Date</td>
+                    <td>Date/time values</td>
+                    <td>min, max</td>
+                </tr>
+                <tr>
+                    <td>Boolean</td>
+                    <td>True/false values</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>ObjectId</td>
+                    <td>MongoDB document IDs</td>
+                    <td>Used for references</td>
+                </tr>
+                <tr>
+                    <td>Array</td>
+                    <td>Lists of values</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Mixed</td>
+                    <td>Any type</td>
+                    <td>-</td>
+                </tr>
+            </table>
+
+            <h2>4.3 Relationships in MongoDB</h2>
+
+            <h3>One-to-Many with References</h3>
+            <div class="code-block">
+<span class="comment">// User model</span>
+<span class="keyword">const</span> userSchema = <span class="keyword">new</span> mongoose.<span class="function">Schema</span>({
+    name: String,
+    email: String
+});
+
+<span class="comment">// Post model with reference to User</span>
+<span class="keyword">const</span> postSchema = <span class="keyword">new</span> mongoose.<span class="function">Schema</span>({
+    title: String,
+    content: String,
+    author: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: <span class="string">'User'</span>,
+        required: <span class="keyword">true</span>
+    }
+});
+
+<span class="comment">// Populate example</span>
+<span class="keyword">const</span> posts = <span class="keyword">await</span> Post.<span class="function">find</span>().<span class="function">populate</span>(<span class="string">'author'</span>);
+            </div>
+
+            <h3>Embedded Documents</h3>
+            <div class="code-block">
+<span class="keyword">const</span> orderSchema = <span class="keyword">new</span> mongoose.<span class="function">Schema</span>({
+    customer: String,
+    items: [{
+        product: String,
+        quantity: Number,
+        price: Number
+    }],
+    shippingAddress: {
+        street: String,
+        city: String,
+        zipCode: String
+    }
+});
+            </div>
+
+            <div class="tip">
+                <strong>Tip:</strong> Use references when you need to query the related data independently. Use embedded documents when the data is always accessed together and won't be referenced by other collections.
+            </div>
+
+            <div class="section-break"></div>
+
+            <h1>Chapter 5: Complete CRUD Operations</h1>
+
+            <h2>5.1 Controller Pattern</h2>
+            
+            <p>Controllers handle the business logic for routes. Create <code>controllers/itemController.js</code>:</p>
+
+            <div class="code-block">
+<span class="comment">// server/controllers/itemController.js</span>
+<span class="keyword">const</span> Item = <span class="function">require</span>(<span class="string">'../models/Item'</span>);
+
+<span class="comment">// @desc    Get all items</span>
+<span class="comment">// @route   GET /api/items</span>
+<span class="comment">// @access  Public</span>
+exports.<span class="function">getAllItems</span> = <span class="keyword">async</span> (req, res) => {
+    <span class="keyword">try</span> {
+        <span class="keyword">const</span> items = <span class="keyword">await</span> Item.<span class="function">find</span>();
+        res.<span class="function">json</span>({
+            success: <span class="keyword">true</span>,
+            count: items.length,
+            data: items
+        });
+    } <span class="keyword">catch</span> (error) {
+        res.<span class="function">status</span>(<span class="string">500</span>).<span class="function">json</span>({
+            success: <span class="keyword">false</span>,
+            message: <span class="string">'Server Error'</span>,
+            error: error.message
+        });
+    }
+};
+
+<span class="comment">// @desc    Get single item</span>
+<span class="comment">// @route   GET /api/items/:id</span>
+<span class="comment">// @access  Public</span>
+exports.<span class="function">getItem</span> = <span class="keyword">async</span> (req, res) => {
+    <span class="keyword">try</span> {
+        <span class="keyword">const</span> item = <span class="keyword">await</span> Item.<span class="function">findById</span>(req.params.id);
+        
+        <span class="keyword">if</span> (!item) {
+            <span class="keyword">return</span> res.<span class="function">status</span>(<span class="string">404</span>).<span class="function">json</span>({
+                success: <span class="keyword">false</span>,
+                message: <span class="string">'Item not found'</span>
+            });
+        }
+        
+        res.<span class="function">json</span>({
+            success: <span class="keyword">true</span>,
+            data: item
+        });
+    } <span class="keyword">catch</span> (error) {
+        res.<span class="function">status</span>(<span class="string">500</span>).<span class="function">json</span>({
+            success: <span class="keyword">false</span>,
+            message: <span class="string">'Server Error'</span>,
+            error: error.message
+        });
+    }
+};
+
+<span class="comment">// @desc    Create new item</span>
+<span class="comment">// @route   POST /api/items</span>
+<span class="comment">// @access  Private</span>
+exports.<span class="function">createItem</span> = <span class="keyword">async</span> (req, res) => {
+    <span class="keyword">try</span> {
+        <span class="keyword">const</span> item = <span class="keyword">await</span> Item.<span class="function">create</span>(req.body);
+        
+        res.<span class="function">status</span>(<span class="string">201</span>).<span class="function">json</span>({
+            success: <span class="keyword">true</span>,
+            data: item
+        });
+    } <span class="keyword">catch</span> (error) {
+        <span class="keyword">if</span> (error.name === <span class="string">'ValidationError'</span>) {
+            <span class="keyword">const</span> messages = Object.<span class="function">values</span>(error.errors).<span class="function">map</span>(e => e.message);
+            <span class="keyword">return</span> res.<span class="function">status</span>(<span class="string">400</span>).<span class="function">json</span>({
+                success: <span class="keyword">false</span>,
+                message: messages
+            });
+        }
+        
+        res.<span class="function">status</span>(<span class="string">500</span>).<span class="function">json</span>({
+            success: <span class="keyword">false</span>,
+            message: <span class="string">'Server Error'</span>,
+            error: error.message
+        });
+    }
+};
+
+<span class="comment">// @desc    Update item</span>
+<span class="comment">// @route   PUT /api/items/:id</span>
+<span class="comment">// @access  Private</span>
+exports.<span class="function">updateItem</span> = <span class="keyword">async</span> (req, res) => {
+    <span class="keyword">try</span> {
+        <span class="keyword">const</span> item = <span class="keyword">await</span> Item.<span class="function">findByIdAndUpdate</span>(
+            req.params.id,
+            req.body,
+            {
+                new: <span class="keyword">true</span>,  <span class="comment">// Return updated document</span>
+                runValidators: <span class="keyword">true</span>  <span class="comment">// Run schema validators</span>
+            }
+        );
+        
+        <span class="keyword">if</span> (!item) {
+            <span class="keyword">return</span> res.<span class="function">status</span>(<span class="string">404</span>).<span class="function">json</span>({
+                success: <span class="keyword">false</span>,
+                message: <span class="string">'Item not found'</span>
+            });
+        }
+        
+        res.<span class="function">json</span>({
+            success: <span class="keyword">true</span>,
+            data: item
+        });
+    } <span class="keyword">catch</span> (error) {
+        res.<span class="function">status</span>(<span class="string">500</span>).<span class="function">json</span>({
+            success: <span class="keyword">false</span>,
+            message: <span class="string">'Server Error'</span>,
+            error: error.message
+        });
+    }
+};
+
+<span class="comment">// @desc    Delete item</span>
+<span class="comment">// @route   DELETE /api/items/:id</span>
+<span class="comment">// @access  Private</span>
+exports.<span class="function">deleteItem</span> = <span class="keyword">async</span> (req, res) => {
+    <span class="keyword">try</span> {
+        <span class="keyword">const</span> item = <span class="keyword">await</span> Item.<span class="function">findByIdAndDelete</span>(req.params.id);
+        
+        <span class="keyword">if</span> (!item) {
+            <span class="keyword">return</span> res.<span class="function">status</span>(<span class="string">404</span>).<span class="function">json</span>({
+                success: <span class="keyword">false</span>,
+                message: <span class="string">'Item not found'</span>
+            });
+        }
+        
+        res.<span class="function">json</span>({
+            success: <span class="keyword">true</span>,
+            message: <span class="string">'Item deleted successfully'</span>
+        });
+    } <span class="keyword">catch</span> (error) {
+        res.<span class="function">status</span>(<span class="string">500</span>).<span class="function">json</span>({
+            success: <span class="keyword">false</span>,
+            message: <span class="string">'Server Error'</span>,
+            error: error.message
+        });
+    }
+};
+            </div>
+
+            <h2>5.2 Updating Routes</h2>
+
+            <div class="code-block">
+<span class="comment">// server/routes/items.js</span>
+<span class="keyword">const</span> express = <span class="function">require</span>(<span class="string">'express'</span>);
+<span class="keyword">const</span> router = express.<span class="function">Router</span>();
+<span class="keyword">const</span> {
+    getAllItems,
+    getItem,
+    createItem,
+    updateItem,
+    deleteItem
+} = <span class="function">require</span>(<span class="string">'../controllers/itemController'</span>);
+
+router.<span class="function">route</span>(<span class="string">'/'</span>)
+    .<span class="function">get</span>(getAllItems)
+    .<span class="function">post</span>(createItem);
+
+router.<span class="function">route</span>(<span class="string">'/:id'</span>)
+    .<span class="function">get</span>(getItem)
+    .<span class="function">put</span>(updateItem)
+    .<span class="function">delete</span>(deleteItem);
+
+module.exports = router;
+            </div>
+
+            <div class="tip">
+                <strong>Tip:</strong> Using <code>router.route()</code> groups routes with the same path, making your code cleaner and easier to maintain.
+            </div>
+
+            <h2>5.3 Testing with Postman</h2>
+
+            <p>Test your CRUD operations:</p>
+
+            <ol>
+                <li><strong>GET all items:</strong> GET http://localhost:5000/api/items</li>
+                <li><strong>GET one item:</strong> GET http://localhost:5000/api/items/:id</li>
+                <li><strong>CREATE item:</strong> POST http://localhost:5000/api/items
+                    <div class="code-block">
+{
+    "name": "Laptop",
+    "description": "High-performance laptop",
+    "price": 999.99,
+    "category": "Electronics",
+    "tags": ["computer", "tech"]
+}
+                    </div>
+                </li>
+                <li><strong>UPDATE item:</strong> PUT http://localhost:5000/api/items/:id</li>
+                <li><strong>DELETE item:</strong> DELETE http://localhost:5000/api/items/:id</li>
+            </ol>
+
+            <div class="section-break"></div>
+
+            <h1>Chapter 6: Building the React Frontend</h1>
+
+            <h2>6.1 Project Structure</h2>
+
+            <p>Organize your React app with this structure:</p>
+
+            <div class="code-block">
+client/src/
+├── components/
+│   ├── common/
+│   │   ├── Navbar.js
+│   │   ├── Footer.js
+│   │   └── Loading.js
+│   ├── items/
+│   │   ├── ItemList.js
+│   │   ├── ItemCard.js
+│   │   ├── ItemForm.js
+│   │   └── ItemDetails.js
+├── pages/
+│   ├── Home.js
+│   ├── ItemsPage.js
+│   └── NotFound.js
+├── services/
+│   └── api.js
+├── context/
+│   └── ItemContext.js
+├── hooks/
+│   └── useItems.js
+├── utils/
+│   └── helpers.js
+├── App.js
+├── App.css
+└── index.js
+            </div>
+
+            <h2>6.2 Setting Up Routing</h2>
+
+            <div class="code-block">
+<span class="comment">// client/src/App.js</span>
+<span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;
+<span class="keyword">import</span> { BrowserRouter <span class="keyword">as</span> Router, Routes, Route } <span class="keyword">from</span> <span class="string">'react-router-dom'</span>;
+<span class="keyword">import</span> Navbar <span class="keyword">from</span> <span class="string">'./components/common/Navbar'</span>;
+<span class="keyword">import</span> Home <span class="keyword">from</span> <span class="string">'./pages/Home'</span>;
+<span class="keyword">import</span> ItemsPage <span class="keyword">from</span> <span class="string">'./pages/ItemsPage'</span>;
+<span class="keyword">import</span> NotFound <span class="keyword">from</span> <span class="string">'./pages/NotFound'</span>;
+<span class="keyword">import</span> <span class="string">'./App.css'</span>;
+
+<span class="keyword">function</span> <span class="function">App</span>() {
+    <span class="keyword">return</span> (
+        &lt;Router&gt;
+            &lt;div className=<span class="string">"App"</span>&gt;
+                &lt;Navbar /&gt;
+                &lt;main className=<span class="string">"container"</span>&gt;
+                    &lt;Routes&gt;
+                        &lt;Route path=<span class="string">"/"</span> element={&lt;Home /&gt;} /&gt;
+                        &lt;Route path=<span class="string">"/items"</span> element={&lt;ItemsPage /&gt;} /&gt;
+                        &lt;Route path=<span class="string">"*"</span> element={&lt;NotFound /&gt;} /&gt;
+                    &lt;/Routes&gt;
+                &lt;/main&gt;
+            &lt;/div&gt;
+        &lt;/Router&gt;
+    );
+}
+
+<span class="keyword">export default</span> App;
+            </div>
+
+            <h2>6.3 API Service Layer</h2>
+
+            <p>Create a centralized API service:</p>
+
+            <div class="code-block">
+<span class="comment">// client/src/services/api.js</span>
+<span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">'axios'</span>;
+
+<span class="keyword">const</span> API = axios.<span class="function">create</span>({
+    baseURL: process.env.REACT_APP_API_URL || <span class="string">'http://localhost:5000/api'</span>,
+    headers: {
+        <span class="string">'Content-Type'</span>: <span class="string">'application/json'</span>
+    }
+});
+
+<span class="comment">// Request interceptor</span>
+API.<span class="function">interceptors</span>.request.<span class="function">use</span>(
+    (config) => {
+        <span class="keyword">const</span> token = localStorage.<span class="function">getItem</span>(<span class="string">'token'</span>);
+        <span class="keyword">if</span> (token) {
+            config.headers.Authorization = <span class="string">`Bearer ${token}`</span>;
+        }
+        <span class="keyword">return</span> config;
+    },
+    (error) => Promise.<span class="function">reject</span>(error)
+);
+
+<span class="comment">// Response interceptor</span>
+API.interceptors.response.<span class="function">use</span>(
+    (response) => response,
+    (error) => {
+        <span class="keyword">if</span> (error.response?.status === <span class="string">401</span>) {
+            localStorage.<span class="function">removeItem</span>(<span class="string">'token'</span>);
+            window.location.href = <span class="string">'/login'</span>;
+        }
+        <span class="keyword">return</span> Promise.<span class="function">reject</span>(error);
+    }
+);
+
+<span class="comment">// Item API calls</span>
+<span class="keyword">export const</span> itemAPI = {
+    <span class="function">getAll</span>: () => API.<span class="function">get</span>(<span class="string">'/items'</span>),
+    <span class="function">getOne</span>: (id) => API.<span class="function">get</span>(<span class="string">`/items/${id}`</span>),
+    <span class="function">create</span>: (data) => API.<span class="function">post</span>(<span class="string">'/items'</span>, data),
+    <span class="function">update</span>: (id, data) => API.<span class="function">put</span>(<span class="string">`/items/${id}`</span>, data),
+    <span class="function">delete</span>: (id) => API.<span class="function">delete</span>(<span class="string">`/items/${id}`</span>)
+};
+
+<span class="keyword">export default</span> API;
+            </div>
+
+            <div class="note">
+                <strong>Note:</strong> Create a <code>.env</code> file in the client directory with <code>REACT_APP_API_URL=http://localhost:5000/api</code>
+            </div>
+
+            <h2>6.4 Custom Hooks</h2>
+
+            <div class="code-block">
+<span class="comment">// client/src/hooks/useItems.js</span>
+<span class="keyword">import</span> { useState, useEffect } <span class="keyword">from</span> <span class="string">'react'</span>;
+<span class="keyword">import</span> { itemAPI } <span class="keyword">from</span> <span class="string">'../services/api'</span>;
+
+<span class="keyword">export const</span> <span class="function">useItems</span> = () => {
+    <span class="keyword">const</span> [items, setItems] = <span class="function">useState</span>([]);
+    <span class="keyword">const</span> [loading, setLoading] = <span class="function">useState</span>(<span class="keyword">true</span>);
+    <span class="keyword">const</span> [error, setError] = <span class="function">useState</span>(<span class="keyword">null</span>);
+
+    <span class="keyword">const</span> <span class="function">fetchItems</span> = <span class="keyword">async</span> () => {
+        <span class="keyword">try</span> {
+            <span class="function">setLoading</span>(<span class="keyword">true</span>);
+            <span class="keyword">const</span> response = <span class="keyword">await</span> itemAPI.<span class="function">getAll</span>();
+            <span class="function">setItems</span>(response.data.data);
+            <span class="function">setError</span>(<span class="keyword">null</span>);
+        } <span class="keyword">catch</span> (err) {
+            <span class="function">setError</span>(err.response?.data?.message || <span class="string">'Failed to fetch items'</span>);
+        } <span class="keyword">finally</span> {
+            <span class="function">setLoading</span>(<span class="keyword">false</span>);
+        }
+    };
+
+    <span class="keyword">const</span> <span class="function">createItem</span> = <span class="keyword">async</span> (itemData) => {
+        <span class="keyword">try</span> {
+            <span class="keyword">const</span> response = <span class="keyword">await</span> itemAPI.<span class="function">create</span>(itemData);
+            <span class="function">setItems</span>([...items, response.data.data]);
+            <span class="keyword">return</span> { success: <span class="keyword">true</span> };
+        } <span class="keyword">catch</span> (err) {
+            <span class="keyword">return</span> { 
+                success: <span class="keyword">false</span>, 
+                error: err.response?.data?.message || <span class="string">'Failed to create item'</span>
+            };
+        }
+    };
+
+    <span class="keyword">const</span> <span class="function">updateItem</span> = <span class="keyword">async</span> (id, itemData) => {
+        <span class="keyword">try</span> {
+            <span class="keyword">const</span> response = <span class="keyword">await</span> itemAPI.<span class="function">update</span>(id, itemData);
+            <span class="function">setItems</span>(items.<span class="function">map</span>(item => 
+                item._id === id ? response.data.data : item
+            ));
+            <span class="keyword">return</span> { success: <span class="keyword">true</span> };
+        } <span class="keyword">catch</span> (err) {
+            <span class="keyword">return</span> { 
+                success: <span class="keyword">false</span>, 
+                error: err.response?.data?.message || <span class="string">'Failed to update item'</span>
+            };
+        }
+    };
+
+    <span class="keyword">const</span> <span class="function">deleteItem</span> = <span class="keyword">async</span> (id) => {
+        <span class="keyword">try</span> {
+            <span class="keyword">await</span> itemAPI.<span class="function">delete</span>(id);
+            <span class="function">setItems</span>(items.<span class="function">filter</span>(item => item._id !== id));
+            <span class="keyword">return</span> { success: <span class="keyword">true</span> };
+        } <span class="keyword">catch</span> (err) {
+            <span class="keyword">return</span> { 
+                success: <span class="keyword">false</span>, 
+                error: err.response?.data?.message || <span class="string">'Failed to delete item'</span>
+            };
+        }
+    };
+
+    <span class="function">useEffect</span>(() => {
+        <span class="function">fetchItems</span>();
+    }, []);
+
+    <span class="keyword">return</span> {
+        items,
+        loading,
+        error,
+        fetchItems,
+        createItem,
+        updateItem,
+        deleteItem
+    };
+};
+            </div>
+
+            <h2>6.5 Building Components</h2>
+
+            <h3>Item List Component</h3>
+            <div class="code-block">
+<span class="comment">// client/src/components/items/ItemList.js</span>
+<span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;
+<span class="keyword">import</span> ItemCard <span class="keyword">from</span> <span class="string">'./ItemCard'</span>;
+<span class="keyword">import</span> { useItems } <span class="keyword">from</span> <span class="string">'../../hooks/useItems'</span>;
+<span class="keyword">import</span> <span class="string">'./ItemList.css'</span>;
+
+<span class="keyword">const</span> <span class="function">ItemList</span> = () => {
+    <span class="keyword">const</span> { items, loading, error, deleteItem } = <span class="function">useItems</span>();
+
+    <span class="keyword">if</span> (loading) {
+        <span class="keyword">return</span> &lt;div className=<span class="string">"loading"</span>&gt;Loading...&lt;/div&gt;;
+    }
+
+    <span class="keyword">if</span> (error) {
+        <span class="keyword">return</span> &lt;div className=<span class="string">"error"</span>&gt;{error}&lt;/div&gt;;
+    }
+
+    <span class="keyword">return</span> (
+        &lt;div className=<span class="string">"item-list"</span>&gt;
+            {items.length === <span class="string">0</span> ? (
+                &lt;p&gt;No items found.&lt;/p&gt;
+            ) : (
+                &lt;div className=<span class="string">"grid"</span>&gt;
+                    {items.<span class="function">map</span>(item => (
+                        &lt;ItemCard 
+                            key={item._id} 
+                            item={item} 
+                            onDelete={deleteItem}
+                        /&gt;
+                    ))}
+                &lt;/div&gt;
+            )}
+        &lt;/div&gt;
+    );
+};
+
+<span class="keyword">export default</span> ItemList;
+            </div>
+
+            <h3>Item Card Component</h3>
+            <div class="code-block">
+<span class="comment">// client/src/components/items/ItemCard.js</span>
+<span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;
+<span class="keyword">import</span> <span class="string">'./ItemCard.css'</span>;
+
+<span class="keyword">const</span> <span class="function">ItemCard</span> = ({ item, onDelete }) => {
+    <span class="keyword">const</span> <span class="function">handleDelete</span> = <span class="keyword">async</span> () => {
+        <span class="keyword">if</span> (window.<span class="function">confirm</span>(<span class="string">'Are you sure?'</span>)) {
+            <span class="keyword">const</span> result = <span class="keyword">await</span> <span class="function">onDelete</span>(item._id);
+            <span class="keyword">if</span> (!result.success) {
+                <span class="function">alert</span>(result.error);
+            }
+        }
+    };
+
+    <span class="keyword">return</span> (
+        &lt;div className=<span class="string">"item-card"</span>&gt;
+            &lt;h3&gt;{item.name}&lt;/h3&gt;
+            &lt;p className=<span class="string">"description"</span>&gt;{item.description}&lt;/p&gt;
+            &lt;p className=<span class="string">"price"</span>&gt;${item.price}&lt;/p&gt;
+            &lt;span className={<span class="string">`badge ${item.inStock ? 'in-stock' : 'out-stock'}`</span>}&gt;
+                {item.inStock ? <span class="string">'In Stock'</span> : <span class="string">'Out of Stock'</span>}
+            &lt;/span&gt;
+            &lt;div className=<span class="string">"actions"</span>&gt;
+                &lt;button className=<span class="string">"btn-edit"</span>&gt;Edit&lt;/button&gt;
+                &lt;button className=<span class="string">"btn-delete"</span> onClick={handleDelete}&gt;
+                    Delete
+                &lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    );
+};
+
+<span class="keyword">export default</span> ItemCard;
+            </div>
+
+            <h3>Item Form Component</h3>
+            <div class="code-block">
+<span class="comment">// client/src/components/items/ItemForm.js</span>
+<span class="keyword">import</span> React, { useState } <span class="keyword">from</span> <span class="string">'react'</span>;
+<span class="keyword">import</span> { useItems } <span class="keyword">from</span> <span class="string">'../../hooks/useItems'</span>;
+<span class="keyword">import</span> <span class="string">'./ItemForm.css'</span>;
+
+<span class="keyword">const</span> <span class="function">ItemForm</span> = ({ item, onClose }) => {
+    <span class="keyword">const</span> [formData, setFormData] = <span class="function">useState</span>({
+        name: item?.name || <span class="string">''</span>,
+        description: item?.description || <span class="string">''</span>,
+        price: item?.price || <span class="string">''</span>,
+        category: item?.category || <span class="string">'Electronics'</span>,
+        inStock: item?.inStock !== undefined ? item.inStock : <span class="keyword">true</span>
+    });
+    <span class="keyword">const</span> [errors, setErrors] = <span class="function">useState</span>({});
+    <span class="keyword">const</span> { createItem, updateItem } = <span class="function">useItems</span>();
+
+    <span class="keyword">const</span> <span class="function">validate</span> = () => {
+        <span class="keyword">const</span> newErrors = {};
+        <span class="keyword">if</span> (!formData.name.trim()) newErrors.name = <span class="string">'Name is required'</span>;
+        <span class="keyword">if</span> (!formData.description.trim()) newErrors.description = <span class="string">'Description is required'</span>;
+        <span class="keyword">if</span> (!formData.price || formData.price <= <span class="string">0</span>) {
+            newErrors.price = <span class="string">'Price must be greater than 0'</span>;
+        }
+        <span class="keyword">return</span> newErrors;
+    };
+
+    <span class="keyword">const</span> <span class="function">handleChange</span> = (e) => {
+        <span class="keyword">const</span> { name, value, type, checked } = e.target;
+        <span class="function">setFormData</span>(prev => ({
+            ...prev,
+            [name]: type === <span class="string">'checkbox'</span> ? checked : value
+        }));
+    };
+
+    <span class="keyword">const</span> <span class="function">handleSubmit</span> = <span class="keyword">async</span> (e) => {
+        e.<span class="function">preventDefault</span>();
+        
+        <span class="keyword">const</span> newErrors = <span class="function">validate</span>();
+        <span class="keyword">if</span> (Object.<span class="function">keys</span>(newErrors).length > <span class="string">0</span>) {
+            <span class="function">setErrors</span>(newErrors);
+            <span class="keyword">return</span>;
+        }
+
+        <span class="keyword">const</span> result = item 
+            ? <span class="keyword">await</span> <span class="function">updateItem</span>(item._id, formData)
+            : <span class="keyword">await</span> <span class="function">createItem</span>(formData);
+
+        <span class="keyword">if</span> (result.success) {
+            <span class="function">onClose</span>();
+        } <span class="keyword">else</span> {
+            <span class="function">alert</span>(result.error);
+        }
+    };
+
+    <span class="keyword">return</span> (
+        &lt;form className=<span class="string">"item-form"</span> onSubmit={handleSubmit}&gt;
+            &lt;h2&gt;{item ? <span class="string">'Edit Item'</span> : <span class="string">'Create Item'</span>}&lt;/h2&gt;
+            
+            &lt;div className=<span class="string">"form-group"</span>&gt;
+                &lt;label&gt;Name&lt;/label&gt;
+                &lt;input
+                    type=<span class="string">"text"</span>
+                    name=<span class="string">"name"</span>
+                    value={formData.name}
+                    onChange={handleChange}
+                /&gt;
+                {errors.name && &lt;span className=<span class="string">"error"</span>&gt;{errors.name}&lt;/span&gt;}
+            &lt;/div&gt;
+
+            &lt;div className=<span class="string">"form-group"</span>&gt;
+                &lt;label&gt;Description&lt;/label&gt;
+                &lt;textarea
+                    name=<span class="string">"description"</span>
+                    value={formData.description}
+                    onChange={handleChange}
+                    rows=<span class="string">"4"</span>
+                /&gt;
+                {errors.description && &lt;span className=<span class="string">"error"</span>&gt;{errors.description}&lt;/span&gt;}
+            &lt;/div&gt;
+
+            &lt;div className=<span class="string">"form-group"</span>&gt;
+                &lt;label&gt;Price&lt;/label&gt;
+                &lt;input
+                    type=<span class="string">"number"</span>
+                    name=<span class="string">"price"</span>
+                    value={formData.price}
+                    onChange={handleChange}
+                    step=<span class="string">"0.01"</span>
+                /&gt;
+                {errors.price && &lt;span className=<span class="string">"error"</span>&gt;{errors.price}&lt;/span&gt;}
+            &lt;/div&gt;
+
+            &lt;div className=<span class="string">"form-group"</span>&gt;
+                &lt;label&gt;Category&lt;/label&gt;
+                &lt;select name=<span class="string">"category"</span> value={formData.category} onChange={handleChange}&gt;
+                    &lt;option value=<span class="string">"Electronics"</span>&gt;Electronics&lt;/option&gt;
+                    &lt;option value=<span class="string">"Clothing"</span>&gt;Clothing&lt;/option&gt;
+                    &lt;option value=<span class="string">"Books"</span>&gt;Books&lt;/option&gt;
+                    &lt;option value=<span class="string">"Food"</span>&gt;Food&lt;/option&gt;
+                    &lt;option value=<span class="string">"Other"</span>&gt;Other&lt;/option&gt;
+                &lt;/select&gt;
+            &lt;/div&gt;
+
+            &lt;div className=<span class="string">"form-group checkbox"</span>&gt;
+                &lt;label&gt;
+                    &lt;input
+                        type=<span class="string">"checkbox"</span>
+                        name=<span class="string">"inStock"</span>
+                        checked={formData.inStock}
+                        onChange={handleChange}
+                    /&gt;
+                    In Stock
+                &lt;/label&gt;
+            &lt;/div&gt;
+
+            &lt;div className=<span class="string">"form-actions"</span>&gt;
+                &lt;button type=<span class="string">"submit"</span> className=<span class="string">"btn-primary"</span>&gt;
+                    {item ? <span class="string">'Update'</span> : <span class="string">'Create'</span>}
+                &lt;/button&gt;
+                &lt;button type=<span class="string">"button"</span> className=<span class="string">"btn-secondary"</span> onClick={onClose}&gt;
+                    Cancel
+                &lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/form&gt;
+    );
+};
+
+<span class="keyword">export default</span> ItemForm;
+            </div>
+
+            <div class="section-break"></div>
+
+            <h1>Chapter 7: Connecting Frontend to Backend</h1>
+
+            <h2>7.1 CORS Configuration</h2>
+
+            <p>Update your backend to allow frontend requests:</p>
+
+            <div class="code-block">
+<span class="comment">// server/server.js</span>
+<span class="keyword">const</span> cors = <span class="function">require</span>(<span class="string">'cors'</span>);
+
+<span class="comment">// Configure CORS</span>
+<span class="keyword">const</span> corsOptions = {
+    origin: process.env.CLIENT_URL || <span class="string">'http://localhost:3000'</span>,
+    credentials: <span class="keyword">true</span>,
+    optionsSuccessStatus: <span class="string">200</span>
+};
+
+app.<span class="function">use</span>(<span class="function">cors</span>(corsOptions));
+            </div>
+
+            <h2>7.2 Proxy Setup (Alternative)</h2>
+
+            <p>Add proxy to package.json in the client folder:</p>
+
+            <div class="code-block">
+{
+    "name": "client",
+    "proxy": "http://localhost:5000",
+    ...
+}
+            </div>
+
+            <div class="tip">
+                <strong>Tip:</strong> Using a proxy simplifies development by avoiding CORS issues and eliminating the need to specify the full API URL in every request.
+            </div>
+
+            <h2>7.3 Error Handling Middleware</h2>
+
+            <div class="code-block">
+<span class="comment">// server/middleware/errorHandler.js</span>
+<span class="keyword">const</span> <span class="function">errorHandler</span> = (err, req, res, next) => {
+    console.<span class="function">error</span>(err.stack);
+
+    <span class="keyword">if</span> (err.name === <span class="string">'ValidationError'</span>) {
+        <span class="keyword">return</span> res.<span class="function">status</span>(<span class="string">400</span>).<span class="function">json</span>({
+            success: <span class="keyword">false</span>,
+            message: <span class="string">'Validation Error'</span>,
+            errors: Object.<span class="function">values</span>(err.errors).<span class="function">map</span>(e => e.message)
+        });
+    }
+
+    <span class="keyword">if</span> (err.name === <span class="string">'CastError'</span>) {
+        <span class="keyword">return</span> res.<span class="function">status</span>(<span class="string">400</span>).<span class="function">json</span>({
+            success: <span class="keyword">false</span>,
+            message: <span class="string">'Invalid ID format'</span>
+        });
+    }
+
+    res.<span class="function">status</span>(err.statusCode || <span class="string">500</span>).<span class="function">json</span>({
+        success: <span class="keyword">false</span>,
+        message: err.message || <span class="string">'Server Error'</span>
+    });
+};
+
+module.exports = errorHandler;
+            </div>
+
+            <p>Add it to server.js as the last middleware:</p>
+
+            <div class="code-block">
+<span class="keyword">const</span> errorHandler = <span class="function">require</span>(<span class="string">'./middleware/errorHandler'</span>);
+
+<span class="comment">// ... routes ...</span>
+
+app.<span class="function">use</span>(errorHandler);
+            </div>
+
+            <div class="section-break"></div>
+
+            <h1>Chapter 8: Authentication & Authorization (JWT)</h1>
+
+            <h2>8.1 User Model</h2>
+
+            <div class="code-block">
+<span class="comment">// server/models/User.js</span>
+<span class="keyword">const</span> mongoose = <span class="function">require</span>(<span class="string">'mongoose'</span>);
+<span class="keyword">const</span> bcrypt = <span class="function">require</span>(<span class="string">'bcryptjs'</span>);
+
+<span class="keyword">const</span> userSchema = <span class="keyword">new</span> mongoose.<span class="function">Schema</span>({
+    name: {
+        type: String,
+        required: [<span class="keyword">true</span>, <span class="string">'Name is required'</span>],
+        trim: <span class="keyword">true</span>
+    },
+    email: {
+        type: String,
+        required: [<span class="keyword">true</span>, <span class="string">'Email is required'</span>],
+        unique: <span class="keyword">true</span>,
+        lowercase: <span class="keyword">true</span>,
+        match: [/^\S+@\S+\.\S+$/, <span class="string">'Please enter a valid email'</span>]
+    },
+    password: {
+        type: String,
+        required: [<span class="keyword">true</span>, <span class="string">'Password is required'</span>],
+        minlength: <span class="string">6</span>,
+        select: <span class="keyword">false</span>  <span class="comment">// Don't return password by default</span>
+    },
+    role: {
+        type: String,
+        enum: [<span class="string">'user'</span>, <span class="string">'admin'</span>],
+        default: <span class="string">'user'</span>
+    }
+}, { timestamps: <span class="keyword">true</span> });
+
+<span class="comment">// Hash password before saving</span>
+userSchema.<span class="function">pre</span>(<span class="string">'save'</span>, <span class="keyword">async function</span>(next) {
+    <span class="keyword">if</span> (!<span class="keyword">this</span>.<span class="function">isModified</span>(<span class="string">'password'</span>)) <span class="keyword">return</span> <span class="function">next</span>();
+    
+    <span class="keyword">const</span> salt = <span class="keyword">await</span> bcrypt.<span class="function">genSalt</span>(<span class="string">10</span>);
+    <span class="keyword">this</span>.password = <span class="keyword">await</span> bcrypt.<span class="function">hash</span>(<span class="keyword">this</span>.password, salt);
+    <span class="function">next</span>();
+});
+
+<span class="comment">// Compare password method</span>
+userSchema.methods.<span class="function">comparePassword</span> = <span class="keyword">async function</span>(candidatePassword) {
+    <span class="keyword">return await</span> bcrypt.<span class="function">compare</span>(candidatePassword, <span class="keyword">this</span>.password);
+};
+
+module.exports = mongoose.<span class="function">model</span>(<span class="string">'User'</span>, userSchema);
+            </div>
+
+            <h2>8.2 JWT Utilities</h2>
+
+            <p>Install required packages:</p>
+            <div class="code-block">
+npm install bcryptjs jsonwebtoken
+            </div>
+
+            <div class="code-block">
+<span class="comment">// server/utils/jwt.js</span>
+<span class="keyword">const</span> jwt = <span class="function">require</span>(<span class="string">'jsonwebtoken'</span>);
+
+<span class="keyword">const</span> <span class="function">generateToken</span> = (userId) => {
+    <span class="keyword">return</span> jwt.<span class="function">sign</span>(
+        { id: userId },
+        process.env.JWT_SECRET,
+        { expiresIn: <span class="string">'7d'</span> }
+    );
+};
+
+<span class="keyword">const</span> <span class="function">verifyToken</span> = (token) => {
+    <span class="keyword">try</span> {
+        <span class="keyword">return</span> jwt.<span class="function">verify</span>(token, process.env.JWT_SECRET);
+    } <span class="keyword">catch</span> (error) {
+        <span class="keyword">return null</span>;
+    }
+};
+
+module.exports = { generateToken, verifyToken };
+            </div>
+
+            <h2>8.3 Authentication Controller</h2>
+
+            <div class="code-block">
+<span class="comment">// server/controllers/authController.js</span>
+<span class="keyword">const</span> User = <span class="function">require</span>(<span class="string">'../models/User'</span>);
+<span class="keyword">const</span> { generateToken } = <span class="function">require</span>(<span class="string">'../utils/jwt'</span>);
+
+<span class="comment">// Register user</span>
+exports.<span class="function">register</span> = <span class="keyword">async</span> (req, res) => {
+    <span class="keyword">try</span> {
+        <span class="keyword">const</span> { name, email, password } = req.body;
+
+        <span class="comment">// Check if user exists</span>
+        <span class="keyword">const</span> existingUser = <span class="keyword">await</span> User.<span class="function">findOne</span>({ email });
+        <span class="keyword">if</span> (existingUser) {
+            <span class="keyword">return</span> res.<span class="function">status</span>(<span class="string">400</span>).<span class="function">json</span>({
+                success: <span class="keyword">false</span>,
+                message: <span class="string">'Email already registered'</span>
+            });
+        }
+
+        <span class="comment">// Create user</span>
+        <span class="keyword">const</span> user = <span class="keyword">await</span> User.<span class="function">create</span>({ name, email, password });
+
+        <span class="comment">// Generate token</span>
+        <span class="keyword">const</span> token = <span class="function">generateToken</span>(user._id);
+
+        res.<span class="function">status</span>(<span class="string">201</span>).<span class="function">json</span>({
+            success: <span class="keyword">true</span>,
+            token,
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role
+            }
+        });
+    } <span class="keyword">catch</span> (error) {
+        res.<span class="function">status</span>(<span class="string">500</span>).<span class="function">json</span>({
+            success: <span class="keyword">false</span>,
+            message: error.message
+        });
+    }
+};
+
+<span class="comment">// Login user</span>
+exports.<span class="function">login</span> = <span class="keyword">async</span> (req, res) => {
+    <span class="keyword">try</span> {
+        <span class="keyword">const</span> { email, password } = req.body;
+
+        <span class="comment">// Check if user exists</span>
+        <span class="keyword">const</span> user = <span class="keyword">await</span> User.<span class="function">findOne</span>({ email }).<span class="function">select</span>(<span class="string">'+password'</span>);
+        <span class="keyword">if</span> (!user) {
+            <span class="keyword">return</span> res.<span class="function">status</span>(<span class="string">401</span>).<span class="function">json</span>({
+                success: <span class="keyword">false</span>,
+                message: <span class="string">'Invalid credentials'</span>
+            });
+        }
+
+        <span class="comment">// Verify password</span>
+        <span class="keyword">const</span> isPasswordValid = <span class="keyword">await</span> user.<span class="function">comparePassword</span>(password);
+        <span class="keyword">if</span> (!isPasswordValid) {
+            <span class="keyword">return</span> res.<span class="function">status</span>(<span class="string">401</span>).<span class="function">json</span>({
+                success: <span class="keyword">false</span>,
+                message: <span class="string">'Invalid credentials'</span>
+            });
+        }
+
+        <span class="comment">// Generate token</span>
+        <span class="keyword">const</span> token = <span class="function">generateToken</span>(user._id);
+
+        res.<span class="function">json</span>({
+            success: <span class="keyword">true</span>,
+            token,
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role
+            }
+        });
+    } <span class="keyword">catch</span> (error) {
+        res.<span class="function">status</span>(<span class="string">500</span>).<span class="function">json</span>({
+            success: <span class="keyword">false</span>,
+            message: error.message
+        });
+    }
+};
+
+<span class="comment">// Get current user</span>
+exports.<span class="function">getMe</span> = <span class="keyword">async</span> (req, res) => {
+    <span class="keyword">try</span> {
+        <span class="keyword">const</span> user = <span class="keyword">await</span> User.<span class="function">findById</span>(req.user.id);
+        res.<span class="function">json</span>({
+            success: <span class="keyword">true</span>,
+            data: user
+        });
+    } <span class="keyword">catch</span> (error) {
+        res.<span class="function">status</span>(<span class="string">500</span>).<span class="function">json</span>({
+            success: <span class="keyword">false</span>,
+            message: error.message
+        });
+    }
+};
+            </div>
+
+            <h2>8.4 Authentication Middleware</h2>
+
+            <div class="code-block">
+<span class="comment">// server/middleware/auth.js</span>
+<span class="keyword">const</span> { verifyToken } = <span class="function">require</span>(<span class="string">'../utils/jwt'</span>);
+<span class="keyword">const</span> User = <span class="function">require</span>(<span class="string">'../models/User'</span>);
+
+<span class="comment">// Protect routes - require authentication</span>
+exports.<span class="function">protect</span> = <span class="keyword">async</span> (req, res, next) => {
+    <span class="keyword">let</span> token;
+
+    <span class="comment">// Check for token in header</span>
+    <span class="keyword">if</span> (req.headers.authorization?.startsWith(<span class="string">'Bearer'</span>)) {
+        token = req.headers.authorization.<span class="function">split</span>(<span class="string">' '</span>)[<span class="string">1</span>];
+    }
+
+    <span class="keyword">if</span> (!token) {
+        <span class="keyword">return</span> res.<span class="function">status</span>(<span class="string">401</span>).<span class="function">json</span>({
+            success: <span class="keyword">false</span>,
+            message: <span class="string">'Not authorized, no token'</span>
+        });
+    }
+
+    <span class="keyword">try</span> {
+        <span class="comment">// Verify token</span>
+        <span class="keyword">const</span> decoded = <span class="function">verifyToken</span>(token);
+        <span class="keyword">if</span> (!decoded) {
+            <span class="keyword">return</span> res.<span class="function">status</span>(<span class="string">401</span>).<span class="function">json</span>({
+                success: <span class="keyword">false</span>,
+                message: <span class="string">'Not authorized, invalid token'</span>
+            });
+        }
+
+        <span class="comment">// Add user to request</span>
+        req.user = <span class="keyword">await</span> User.<span class="function">findById</span>(decoded.id);
+        <span class="function">next</span>();
+    } <span class="keyword">catch</span> (error) {
+        res.<span class="function">status</span>(<span class="string">401</span>).<span class="function">json</span>({
+            success: <span class="keyword">false</span>,
+            message: <span class="string">'Not authorized'</span>
+        });
+    }
+};
+
+<span class="comment">// Authorize specific roles</span>
+exports.<span class="function">authorize</span> = (...roles) => {
+    <span class="keyword">return</span> (req, res, next) => {
+        <span class="keyword">if</span> (!roles.<span class="function">includes</span>(req.user.role)) {
+            <span class="keyword">return</span> res.<span class="function">status</span>(<span class="string">403</span>).<span class="function">json</span>({
+                success: <span class="keyword">false</span>,
+                message: <span class="string">`Role ${req.user.role} is not authorized`</span>
+            });
+        }
+        <span class="function">next</span>();
+    };
+};
+            </div>
+
+            <h2>8.5 Protected Routes</h2>
+
+            <div class="code-block">
+<span class="comment">// server/routes/auth.js</span>
+<span class="keyword">const</span> express = <span class="function">require</span>(<span class="string">'express'</span>);
+<span class="keyword">const</span> router = express.<span class="function">Router</span>();
+<span class="keyword">const</span> { register, login, getMe } = <span class="function">require</span>(<span class="string">'../controllers/authController'</span>);
+<span class="keyword">const</span> { protect } = <span class="function">require</span>(<span class="string">'../middleware/auth'</span>);
+
+router.<span class="function">post</span>(<span class="string">'/register'</span>, register);
+router.<span class="function">post</span>(<span class="string">'/login'</span>, login);
+router.<span class="function">get</span>(<span class="string">'/me'</span>, protect, getMe);
+
+module.exports = router;
+            </div>
+
+            <div class="code-block">
+<span class="comment">// server/routes/items.js - Update to protect routes</span>
+<span class="keyword">const</span> { protect, authorize } = <span class="function">require</span>(<span class="string">'../middleware/auth'</span>);
+
+router.<span class="function">route</span>(<span class="string">'/'</span>)
+    .<span class="function">get</span>(getAllItems)
+    .<span class="function">post</span>(protect, createItem);  <span class="comment">// Require authentication</span>
+
+router.<span class="function">route</span>(<span class="string">'/:id'</span>)
+    .<span class="function">get</span>(getItem)
+    .<span class="function">put</span>(protect, updateItem)
+    .<span class="function">delete</span>(protect, authorize(<span class="string">'admin'</span>), deleteItem);  <span class="comment">// Admin only</span>
+            </div>
+
+            <h2>8.6 Frontend Authentication</h2>
+
+            <h3>Auth Context</h3>
+            <div class="code-block">
+<span class="comment">// client/src/context/AuthContext.js</span>
+<span class="keyword">import</span> React, { createContext, useState, useEffect } <span class="keyword">from</span> <span class="string">'react'</span>;
+<span class="keyword">import</span> API <span class="keyword">from</span> <span class="string">'../services/api'</span>;
+
+<span class="keyword">export const</span> AuthContext = <span class="function">createContext</span>();
+
+<span class="keyword">export const</span> <span class="function">AuthProvider</span> = ({ children }) => {
+    <span class="keyword">const</span> [user, setUser] = <span class="function">useState</span>(<span class="keyword">null</span>);
+    <span class="keyword">const</span> [loading, setLoading] = <span class="function">useState</span>(<span class="keyword">true</span>);
+
+    <span class="function">useEffect</span>(() => {
+        <span class="function">checkAuth</span>();
+    }, []);
+
+    <span class="keyword">const</span> <span class="function">checkAuth</span> = <span class="keyword">async</span> () => {
+        <span class="keyword">const</span> token = localStorage.<span class="function">getItem</span>(<span class="string">'token'</span>);
+        <span class="keyword">if</span> (token) {
+            <span class="keyword">try</span> {
+                <span class="keyword">const</span> response = <span class="keyword">await</span> API.<span class="function">get</span>(<span class="string">'/auth/me'</span>);
+                <span class="function">setUser</span>(response.data.data);
+            } <span class="keyword">catch</span> (error) {
+                localStorage.<span class="function">removeItem</span>(<span class="string">'token'</span>);
+            }
+        }
+        <span class="function">setLoading</span>(<span class="keyword">false</span>);
+    };
+
+    <span class="keyword">const</span> <span class="function">login</span> = <span class="keyword">async</span> (email, password) => {
+        <span class="keyword">try</span> {
+            <span class="keyword">const</span> response = <span class="keyword">await</span> API.<span class="function">post</span>(<span class="string">'/auth/login'</span>, { email, password });
+            localStorage.<span class="function">setItem</span>(<span class="string">'token'</span>, response.data.token);
+            <span class="function">setUser</span>(response.data.user);
+            <span class="keyword">return</span> { success: <span class="keyword">true</span> };
+        } <span class="keyword">catch</span> (error) {
+            <span class="keyword">return</span> { 
+                success: <span class="keyword">false</span>, 
+                error: error.response?.data?.message || <span class="string">'Login failed'</span>
+            };
+        }
+    };
+
+    <span class="keyword">const</span> <span class="function">register</span> = <span class="keyword">async</span> (name, email, password) => {
+        <span class="keyword">try</span> {
+            <span class="keyword">const</span> response = <span class="keyword">await</span> API.<span class="function">post</span>(<span class="string">'/auth/register'</span>, { name, email, password });
+            localStorage.<span class="function">setItem</span>(<span class="string">'token'</span>, response.data.token);
+            <span class="function">setUser</span>(response.data.user);
+            <span class="keyword">return</span> { success: <span class="keyword">true</span> };
+        } <span class="keyword">catch</span> (error) {
+            <span class="keyword">return</span> { 
+                success: <span class="keyword">false</span>, 
+                error: error.response?.data?.message || <span class="string">'Registration failed'</span>
+            };
+        }
+    };
+
+    <span class="keyword">const</span> <span class="function">logout</span> = () => {
+        localStorage.<span class="function">removeItem</span>(<span class="string">'token'</span>);
+        <span class="function">setUser</span>(<span class="keyword">null</span>);
+    };
+
+    <span class="keyword">return</span> (
+        &lt;AuthContext.Provider value={{ user, loading, login, register, logout }}&gt;
+            {children}
+        &lt;/AuthContext.Provider&gt;
+    );
+};
+            </div>
+
+            <h3>Login Component</h3>
+            <div class="code-block">
+<span class="comment">// client/src/components/auth/Login.js</span>
+<span class="keyword">import</span> React, { useState, useContext } <span class="keyword">from</span> <span class="string">'react'</span>;
+<span class="keyword">import</span> { useNavigate } <span class="keyword">from</span> <span class="string">'react-router-dom'</span>;
+<span class="keyword">import</span> { AuthContext } <span class="keyword">from</span> <span class="string">'../../context/AuthContext'</span>;
+
+<span class="keyword">const</span> <span class="function">Login</span> = () => {
+    <span class="keyword">const</span> [email, setEmail] = <span class="function">useState</span>(<span class="string">''</span>);
+    <span class="keyword">const</span> [password, setPassword] = <span class="function">useState</span>(<span class="string">''</span>);
+    <span class="keyword">const</span> [error, setError] = <span class="function">useState</span>(<span class="string">''</span>);
+    <span class="keyword">const</span> { login } = <span class="function">useContext</span>(AuthContext);
+    <span class="keyword">const</span> navigate = <span class="function">useNavigate</span>();
+
+    <span class="keyword">const</span> <span class="function">handleSubmit</span> = <span class="keyword">async</span> (e) => {
+        e.<span class="function">preventDefault</span>();
+        <span class="function">setError</span>(<span class="string">''</span>);
+
+        <span class="keyword">const</span> result = <span class="keyword">await</span> <span class="function">login</span>(email, password);
+        <span class="keyword">if</span> (result.success) {
+            <span class="function">navigate</span>(<span class="string">'/'</span>);
+        } <span class="keyword">else</span> {
+            <span class="function">setError</span>(result.error);
+        }
+    };
+
+    <span class="keyword">return</span> (
+        &lt;div className=<span class="string">"auth-container"</span>&gt;
+            &lt;form onSubmit={handleSubmit} className=<span class="string">"auth-form"</span>&gt;
+                &lt;h2&gt;Login&lt;/h2&gt;
+                {error && &lt;div className=<span class="string">"error"</span>&gt;{error}&lt;/div&gt;}
+                
+                &lt;input
+                    type=<span class="string">"email"</span>
+                    placeholder=<span class="string">"Email"</span>
+                    value={email}
+                    onChange={(e) => <span class="function">setEmail</span>(e.target.value)}
+                    required
+                /&gt;
+                
+                &lt;input
+                    type=<span class="string">"password"</span>
+                    placeholder=<span class="string">"Password"</span>
+                    value={password}
+                    onChange={(e) => <span class="function">setPassword</span>(e.target.value)}
+                    required
+                /&gt;
+                
+                &lt;button type=<span class="string">"submit"</span>&gt;Login&lt;/button&gt;
+            &lt;/form&gt;
+        &lt;/div&gt;
+    );
+};
+
+<span class="keyword">export default</span> Login;
+            </div>
+
+            <h3>Protected Route Component</h3>
+            <div class="code-block">
+<span class="comment">// client/src/components/ProtectedRoute.js</span>
+<span class="keyword">import</span> React, { useContext } <span class="keyword">from</span> <span class="string">'react'</span>;
+<span class="keyword">import</span> { Navigate } <span class="keyword">from</span> <span class="string">'react-router-dom'</span>;
+<span class="keyword">import</span> { AuthContext } <span class="keyword">from</span> <span class="string">'../context/AuthContext'</span>;
+
+<span class="keyword">const</span> <span class="function">ProtectedRoute</span> = ({ children }) => {
+    <span class="keyword">const</span> { user, loading } = <span class="function">useContext</span>(AuthContext);
+
+    <span class="keyword">if</span> (loading) {
+        <span class="keyword">return</span> &lt;div&gt;Loading...&lt;/div&gt;;
+    }
+
+    <span class="keyword">return</span> user ? children : &lt;Navigate to=<span class="string">"/login"</span> /&gt;;
+};
+
+<span class="keyword">export default</span> ProtectedRoute;
+            </div>
+
+            <div class="section-break"></div>
+
+            <h1>Chapter 9: File Upload & Management</h1>
+
+            <h2>9.1 Backend Setup with Multer</h2>
+
+            <p>Install required packages:</p>
+            <div class="code-block">
+npm install multer cloudinary multer-storage-cloudinary
+            </div>
+
+            <h3>Local File Storage</h3>
+            <div class="code-block">
+<span class="comment">// server/middleware/upload.js</span>
+<span class="keyword">const</span> multer = <span class="function">require</span>(<span class="string">'multer'</span>);
+<span class="keyword">const</span> path = <span class="function">require</span>(<span class="string">'path'</span>);
+
+<span class="comment">// Configure storage</span>
+<span class="keyword">const</span> storage = multer.<span class="function">diskStorage</span>({
+    <span class="function">destination</span>: (req, file, cb) => {
+        <span class="function">cb</span>(<span class="keyword">null</span>, <span class="string">'uploads/'</span>);
+    },
+    <span class="function">filename</span>: (req, file, cb) => {
+        <span class="keyword">const</span> uniqueSuffix = Date.<span class="function">now</span>() + <span class="string">'-'</span> + Math.<span class="function">round</span>(Math.<span class="function">random</span>() * <span class="string">1E9</span>);
+        <span class="function">cb</span>(<span class="keyword">null</span>, file.fieldname + <span class="string">'-'</span> + uniqueSuffix + path.<span class="function">extname</span>(file.originalname));
+    }
+});
+
+<span class="comment">// File filter</span>
+<span class="keyword">const</span> <span class="function">fileFilter</span> = (req, file, cb) => {
+    <span class="keyword">const</span> allowedTypes = /jpeg|jpg|png|gif|pdf/;
+    <span class="keyword">const</span> extname = allowedTypes.<span class="function">test</span>(path.<span class="function">extname</span>(file.originalname).<span class="function">toLowerCase</span>());
+    <span class="keyword">const</span> mimetype = allowedTypes.<span class="function">test</span>(file.mimetype);
+
+    <span class="keyword">if</span> (extname && mimetype) {
+        <span class="keyword">return</span> <span class="function">cb</span>(<span class="keyword">null</span>, <span class="keyword">true</span>);
+    }
+    <span class="function">cb</span>(<span class="keyword">new</span> Error(<span class="string">'Only images and PDFs allowed'</span>));
+};
+
+<span class="keyword">const</span> upload = <span class="function">multer</span>({
+    storage,
+    limits: { fileSize: <span class="string">5</span> * <span class="string">1024</span> * <span class="string">1024</span> },  <span class="comment">// 5MB</span>
+    fileFilter
+});
+
+module.exports = upload;
+            </div>
+
+            <h3>Cloudinary Integration (Recommended for Production)</h3>
+            <div class="code-block">
+<span class="comment">// server/config/cloudinary.js</span>
+<span class="keyword">const</span> cloudinary = <span class="function">require</span>(<span class="string">'cloudinary'</span>).v2;
+<span class="keyword">const</span> { CloudinaryStorage } = <span class="function">require</span>(<span class="string">'multer-storage-cloudinary'</span>);
+<span class="keyword">const</span> multer = <span class="function">require</span>(<span class="string">'multer'</span>);
+
+cloudinary.<span class="function">config</span>({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+<span class="keyword">const</span> storage = <span class="keyword">new</span> <span class="function">CloudinaryStorage</span>({
+    cloudinary,
+    params: {
+        folder: <span class="string">'mern-app'</span>,
+        allowed_formats: [<span class="string">'jpg'</span>, <span class="string">'jpeg'</span>, <span class="string">'png'</span>, <span class="string">'pdf'</span>],
+        transformation: [{ width: <span class="string">500</span>, height: <span class="string">500</span>, crop: <span class="string">'limit'</span> }]
+    }
+});
+
+<span class="keyword">const</span> upload = <span class="function">multer</span>({ storage });
+
+module.exports = { cloudinary, upload };
+            </div>
+
+            <h2>9.2 File Upload Routes</h2>
+
+            <div class="code-block">
+<span class="comment">// server/routes/upload.js</span>
+<span class="keyword">const</span> express = <span class="function">require</span>(<span class="string">'express'</span>);
+<span class="keyword">const</span> router = express.<span class="function">Router</span>();
+<span class="keyword">const</span> { upload } = <span class="function">require</span>(<span class="string">'../config/cloudinary'</span>);
+<span class="keyword">const</span> { protect } = <span class="function">require</span>(<span class="string">'../middleware/auth'</span>);
+
+<span class="comment">// Single file upload</span>
+router.<span class="function">post</span>(<span class="string">'/single'</span>, protect, upload.<span class="function">single</span>(<span class="string">'file'</span>), (req, res) => {
+    <span class="keyword">try</span> {
+        res.<span class="function">json</span>({
+            success: <span class="keyword">true</span>,
+            file: {
+                url: req.file.path,
+                filename: req.file.filename,
+                size: req.file.size
+            }
+        });
+    } <span class="keyword">catch</span> (error) {
+        res.<span class="function">status</span>(<span class="string">500</span>).<span class="function">json</span>({
+            success: <span class="keyword">false</span>,
+            message: error.message
+        });
+    }
+});
+
+<span class="comment">// Multiple files upload</span>
+router.<span class="function">post</span>(<span class="string">'/multiple'</span>, protect, upload.<span class="function">array</span>(<span class="string">'files'</span>, <span class="string">5</span>), (req, res) => {
+    <span class="keyword">try</span> {
+        <span class="keyword">const</span> files = req.files.<span class="function">map</span>(file => ({
+            url: file.path,
+            filename: file.filename,
+            size: file.size
+        }));
+
+        res.<span class="function">json</span>({
+            success: <span class="keyword">true</span>,
+            files
+        });
+    } <span class="keyword">catch</span> (error) {
+        res.<span class="function">status</span>(<span class="string">500</span>).<span class="function">json</span>({
+            success: <span class="keyword">false</span>,
+            message: error.message
+        });
+    }
+});
+
+module.exports = router;
+            </div>
+
+            <h2>9.3 Frontend File Upload</h2>
+
+            <div class="code-block">
+<span class="comment">// client/src/components/FileUpload.js</span>
+<span class="keyword">import</span> React, { useState } <span class="keyword">from</span> <span class="string">'react'</span>;
+<span class="keyword">import</span> API <span class="keyword">from</span> <span class="string">'../services/api'</span>;
+
+<span class="keyword">const</span> <span class="function">FileUpload</span> = ({ onUploadComplete }) => {
+    <span class="keyword">const</span> [file, setFile] = <span class="function">useState</span>(<span class="keyword">null</span>);
+    <span class="keyword">const</span> [uploading, setUploading] = <span class="function">useState</span>(<span class="keyword">false</span>);
+    <span class="keyword">const</span> [progress, setProgress] = <span class="function">useState</span>(<span class="string">0</span>);
+
+    <span class="keyword">const</span> <span class="function">handleFileChange</span> = (e) => {
+        <span class="function">setFile</span>(e.target.files[<span class="string">0</span>]);
+    };
+
+    <span class="keyword">const</span> <span class="function">handleUpload</span> = <span class="keyword">async</span> () => {
+        <span class="keyword">if</span> (!file) <span class="keyword">return</span>;
+
+        <span class="keyword">const</span> formData = <span class="keyword">new</span> <span class="function">FormData</span>();
+        formData.<span class="function">append</span>(<span class="string">'file'</span>, file);
+
+        <span class="keyword">try</span> {
+            <span class="function">setUploading</span>(<span class="keyword">true</span>);
+            
+            <span class="keyword">const</span> response = <span class="keyword">await</span> API.<span class="function">post</span>(<span class="string">'/upload/single'</span>, formData, {
+                headers: {
+                    <span class="string">'Content-Type'</span>: <span class="string">'multipart/form-data'</span>
+                },
+                <span class="function">onUploadProgress</span>: (progressEvent) => {
+                    <span class="keyword">const</span> percentCompleted = Math.<span class="function">round</span>(
+                        (progressEvent.loaded * <span class="string">100</span>) / progressEvent.total
+                    );
+                    <span class="function">setProgress</span>(percentCompleted);
+                }
+            });
+
+            <span class="function">onUploadComplete</span>(response.data.file);
+            <span class="function">setFile</span>(<span class="keyword">null</span>);
+        } <span class="keyword">catch</span> (error) {
+            console.<span class="function">error</span>(<span class="string">'Upload failed:'</span>, error);
+            <span class="function">alert</span>(<span class="string">'Upload failed'</span>);
+        } <span class="keyword">finally</span> {
+            <span class="function">setUploading</span>(<span class="keyword">false</span>);
+            <span class="function">setProgress</span>(<span class="string">0</span>);
+        }
+    };
+
+    <span class="keyword">return</span> (
+        &lt;div className=<span class="string">"file-upload"</span>&gt;
+            &lt;input type=<span class="string">"file"</span> onChange={handleFileChange} disabled={uploading} /&gt;
+            
+            {file && (
+                &lt;div&gt;
+                    &lt;p&gt;Selected: {file.name}&lt;/p&gt;
+                    &lt;button onClick={handleUpload} disabled={uploading}&gt;
+                        {uploading ? <span class="string">`Uploading... ${progress}%`</span> : <span class="string">'Upload'</span>}
+                    &lt;/button&gt;
+                &lt;/div&gt;
+            )}
+
+            {uploading && (
+                &lt;div className=<span class="string">"progress-bar"</span>&gt;
+                    &lt;div 
+                        className=<span class="string">"progress"</span> 
+                        style={{ width: <span class="string">`${progress}%`</span> }}
+                    /&gt;
+                &lt;/div&gt;
+            )}
+        &lt;/div&gt;
+    );
+};
+
+<span class="keyword">export default</span> FileUpload;
+            </div>
+
+            <div class="section-break"></div>
+
+            <h1>Chapter 10: Advanced Features</h1>
+
+            <h2>10.1 Pagination</h2>
+
+            <h3>Backend Implementation</h3>
+            <div class="code-block">
+<span class="comment">// server/controllers/itemController.js</span>
+exports.<span class="function">getAllItems</span> = <span class="keyword">async</span> (req, res) => {
+    <span class="keyword">try</span> {
+        <span class="comment">// Pagination parameters</span>
+        <span class="keyword">const</span> page = <span class="function">parseInt</span>(req.query.page) || <span class="string">1</span>;
+        <span class="keyword">const</span> limit = <span class="function">parseInt</span>(req.query.limit) || <span class="string">10</span>;
+        <span class="keyword">const</span> skip = (page - <span class="string">1</span>) * limit;
+
+        <span class="comment">// Build query</span>
+        <span class="keyword">const</span> query = {};
+        
+        <span class="comment">// Search</span>
+        <span class="keyword">if</span> (req.query.search) {
+            query.$or = [
+                { name: { $regex: req.query.search, $options: <span class="string">'i'</span> }},
+                { description: { $regex: req.query.search, $options: <span class="string">'i'</span> }}
+            ];
+        }
+
+        <span class="comment">// Filter by category</span>
+        <span class="keyword">if</span> (req.query.category) {
+            query.category = req.query.category;
+        }
+
+        <span class="comment">// Filter by price range</span>
+        <span class="keyword">if</span> (req.query.minPrice || req.query.maxPrice) {
+            query.price = {};
+            <span class="keyword">if</span> (req.query.minPrice) query.price.$gte = <span class="function">parseFloat</span>(req.query.minPrice);
+            <span class="keyword">if</span> (req.query.maxPrice) query.price.$lte = <span class="function">parseFloat</span>(req.query.maxPrice);
+        }
+
+        <span class="comment">// Execute query with pagination</span>
+        <span class="keyword">const</span> items = <span class="keyword">await</span> Item.<span class="function">find</span>(query)
+            .<span class="function">limit</span>(limit)
+            .<span class="function">skip</span>(skip)
+            .<span class="function">sort</span>({ createdAt: <span class="string">-1</span> });
+
+        <span class="comment">// Get total count</span>
+        <span class="keyword">const</span> total = <span class="keyword">await</span> Item.<span class="function">countDocuments</span>(query);
+
+        res.<span class="function">json</span>({
+            success: <span class="keyword">true</span>,
+            count: items.length,
+            total,
+            page,
+            pages: Math.<span class="function">ceil</span>(total / limit),
+            data: items
+        });
+    } <span class="keyword">catch</span> (error) {
+        res.<span class="function">status</span>(<span class="string">500</span>).<span class="function">json</span>({
+            success: <span class="keyword">false</span>,
+            message: error.message
+        });
+    }
+};
+            </div>
+
+            <h3>Frontend Pagination Component</h3>
+            <div class="code-block">
+<span class="comment">// client/src/components/Pagination.js</span>
+<span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;
+
+<span class="keyword">const</span> <span class="function">Pagination</span> = ({ currentPage, totalPages, onPageChange }) => {
+    <span class="keyword">const</span> pages = [];
+    
+    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="string">1</span>; i <= totalPages; i++) {
+        pages.<span class="function">push</span>(i);
+    }
+
+    <span class="keyword">return</span> (
+        &lt;div className=<span class="string">"pagination"</span>&gt;
+            &lt;button 
+                onClick={() => <span class="function">onPageChange</span>(currentPage - <span class="string">1</span>)}
+                disabled={currentPage === <span class="string">1</span>}
+            &gt;
+                Previous
+            &lt;/button&gt;
+
+            {pages.<span class="function">map</span>(page => (
+                &lt;button
+                    key={page}
+                    onClick={() => <span class="function">onPageChange</span>(page)}
+                    className={currentPage === page ? <span class="string">'active'</span> : <span class="string">''</span>}
+                &gt;
+                    {page}
+                &lt;/button&gt;
+            ))}
+
+            &lt;button 
+                onClick={() => <span class="function">onPageChange</span>(currentPage + <span class="string">1</span>)}
+                disabled={currentPage === totalPages}
+            &gt;
+                Next
+            &lt;/button&gt;
+        &lt;/div&gt;
+    );
+};
+
+<span class="keyword">export default</span> Pagination;
+            </div>
+
+            <h2>10.2 Search and Filtering</h2>
+
+            <div class="code-block">
+<span class="comment">// client/src/components/SearchFilter.js</span>
+<span class="keyword">import</span> React, { useState } <span class="keyword">from</span> <span class="string">'react'</span>;
+
+<span class="keyword">const</span> <span class="function">SearchFilter</span> = ({ onSearch, onFilter }) => {
+    <span class="keyword">const</span> [searchTerm, setSearchTerm] = <span class="function">useState</span>(<span class="string">''</span>);
+    <span class="keyword">const</span> [filters, setFilters] = <span class="function">useState</span>({
+        category: <span class="string">''</span>,
+        minPrice: <span class="string">''</span>,
+        maxPrice: <span class="string">''</span>
+    });
+
+    <span class="keyword">const</span> <span class="function">handleSearch</span> = (e) => {
+        e.<span class="function">preventDefault</span>();
+        <span class="function">onSearch</span>(searchTerm);
+    };
+
+    <span class="keyword">const</span> <span class="function">handleFilterChange</span> = (e) => {
+        <span class="keyword">const</span> { name, value } = e.target;
+        <span class="keyword">const</span> newFilters = { ...filters, [name]: value };
+        <span class="function">setFilters</span>(newFilters);
+        <span class="function">onFilter</span>(newFilters);
+    };
+
+    <span class="keyword">return</span> (
+        &lt;div className=<span class="string">"search-filter"</span>&gt;
+            &lt;form onSubmit={handleSearch}&gt;
+                &lt;input
+                    type=<span class="string">"text"</span>
+                    placeholder=<span class="string">"Search items..."</span>
+                    value={searchTerm}
+                    onChange={(e) => <span class="function">setSearchTerm</span>(e.target.value)}
+                /&gt;
+                &lt;button type=<span class="string">"submit"</span>&gt;Search&lt;/button&gt;
+            &lt;/form&gt;
+
+            &lt;div className=<span class="string">"filters"</span>&gt;
+                &lt;select name=<span class="string">"category"</span> value={filters.category} onChange={handleFilterChange}&gt;
+                    &lt;option value=<span class="string">""</span>&gt;All Categories&lt;/option&gt;
+                    &lt;option value=<span class="string">"Electronics"</span>&gt;Electronics&lt;/option&gt;
+                    &lt;option value=<span class="string">"Clothing"</span>&gt;Clothing&lt;/option&gt;
+                    &lt;option value=<span class="string">"Books"</span>&gt;Books&lt;/option&gt;
+                &lt;/select&gt;
+
+                &lt;input
+                    type=<span class="string">"number"</span>
+                    name=<span class="string">"minPrice"</span>
+                    placeholder=<span class="string">"Min Price"</span>
+                    value={filters.minPrice}
+                    onChange={handleFilterChange}
+                /&gt;
+
+                &lt;input
+                    type=<span class="string">"number"</span>
+                    name=<span class="string">"maxPrice"</span>
+                    placeholder=<span class="string">"Max Price"</span>
+                    value={filters.maxPrice}
+                    onChange={handleFilterChange}
+                /&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    );
+};
+
+<span class="keyword">export default</span> SearchFilter;
+            </div>
+
+            <h2>10.3 Sorting</h2>
+
+            <div class="code-block">
+<span class="comment">// Backend sorting</span>
+<span class="keyword">const</span> sortField = req.query.sortBy || <span class="string">'createdAt'</span>;
+<span class="keyword">const</span> sortOrder = req.query.order === <span class="string">'asc'</span> ? <span class="string">1</span> : <span class="string">-1</span>;
+
+<span class="keyword">const</span> items = <span class="keyword">await</span> Item.<span class="function">find</span>(query)
+    .<span class="function">sort</span>({ [sortField]: sortOrder })
+    .<span class="function">limit</span>(limit)
+    .<span class="function">skip</span>(skip);
+            </div>
+
+            <div class="section-break"></div>
+
+            <h1>Chapter 11: Error Handling & Validation</h1>
+
+            <h2>11.1 Custom Error Classes</h2>
+
+            <div class="code-block">
+<span class="comment">// server/utils/errors.js<span class="comment">// server/utils/errors.js</span>
+<span class="keyword">class</span> <span class="function">AppError</span> <span class="keyword">extends</span> Error {
+    <span class="function">constructor</span>(message, statusCode) {
+        <span class="keyword">super</span>(message);
+        <span class="keyword">this</span>.statusCode = statusCode;
+        <span class="keyword">this</span>.isOperational = <span class="keyword">true</span>;
+        Error.<span class="function">captureStackTrace</span>(<span class="keyword">this</span>, <span class="keyword">this</span>.constructor);
+    }
+}
+
+<span class="keyword">class</span> <span class="function">NotFoundError</span> <span class="keyword">extends</span> AppError {
+    <span class="function">constructor</span>(message = <span class="string">'Resource not found'</span>) {
+        <span class="keyword">super</span>(message, <span class="string">404</span>);
+    }
+}
+
+<span class="keyword">class</span> <span class="function">ValidationError</span> <span class="keyword">extends</span> AppError {
+    <span class="function">constructor</span>(message = <span class="string">'Validation failed'</span>) {
+        <span class="keyword">super</span>(message, <span class="string">400</span>);
+    }
+}
+
+<span class="keyword">class</span> <span class="function">UnauthorizedError</span> <span class="keyword">extends</span> AppError {
+    <span class="function">constructor</span>(message = <span class="string">'Unauthorized'</span>) {
+        <span class="keyword">super</span>(message, <span class="string">401</span>);
+    }
+}
+
+module.exports = { AppError, NotFoundError, ValidationError, UnauthorizedError };
+            </div>
+
+            <h2>11.2 Async Handler Wrapper</h2>
+
+            <div class="code-block">
+<span class="comment">// server/utils/asyncHandler.js</span>
+<span class="keyword">const</span> <span class="function">asyncHandler</span> = (fn) => (req, res, next) => {
+    Promise.<span class="function">resolve</span>(<span class="function">fn</span>(req, res, next)).<span class="function">catch</span>(next);
+};
+
+module.exports = asyncHandler;
+            </div>
+
+            <p>Usage example:</p>
+            <div class="code-block">
+<span class="keyword">const</span> asyncHandler = <span class="function">require</span>(<span class="string">'../utils/asyncHandler'</span>);
+<span class="keyword">const</span> { NotFoundError } = <span class="function">require</span>(<span class="string">'../utils/errors'</span>);
+
+exports.<span class="function">getItem</span> = <span class="function">asyncHandler</span>(<span class="keyword">async</span> (req, res) => {
+    <span class="keyword">const</span> item = <span class="keyword">await</span> Item.<span class="function">findById</span>(req.params.id);
+    
+    <span class="keyword">if</span> (!item) {
+        <span class="keyword">throw new</span> <span class="function">NotFoundError</span>(<span class="string">'Item not found'</span>);
+    }
+    
+    res.<span class="function">json</span>({ success: <span class="keyword">true</span>, data: item });
+});
+            </div>
+
+            <h2>11.3 Input Validation with Express Validator</h2>
+
+            <p>Install express-validator:</p>
+            <div class="code-block">
+npm install express-validator
+            </div>
+
+            <div class="code-block">
+<span class="comment">// server/middleware/validators.js</span>
+<span class="keyword">const</span> { body, param, validationResult } = <span class="function">require</span>(<span class="string">'express-validator'</span>);
+
+<span class="comment">// Validation middleware</span>
+<span class="keyword">const</span> <span class="function">validate</span> = (req, res, next) => {
+    <span class="keyword">const</span> errors = <span class="function">validationResult</span>(req);
+    <span class="keyword">if</span> (!errors.<span class="function">isEmpty</span>()) {
+        <span class="keyword">return</span> res.<span class="function">status</span>(<span class="string">400</span>).<span class="function">json</span>({
+            success: <span class="keyword">false</span>,
+            errors: errors.<span class="function">array</span>()
+        });
+    }
+    <span class="function">next</span>();
+};
+
+<span class="comment">// Item validation rules</span>
+<span class="keyword">const</span> itemValidationRules = [
+    <span class="function">body</span>(<span class="string">'name'</span>)
+        .<span class="function">trim</span>()
+        .<span class="function">notEmpty</span>().<span class="function">withMessage</span>(<span class="string">'Name is required'</span>)
+        .<span class="function">isLength</span>({ min: <span class="string">3</span>, max: <span class="string">100</span> })
+        .<span class="function">withMessage</span>(<span class="string">'Name must be between 3 and 100 characters'</span>),
+    
+    <span class="function">body</span>(<span class="string">'description'</span>)
+        .<span class="function">trim</span>()
+        .<span class="function">notEmpty</span>().<span class="function">withMessage</span>(<span class="string">'Description is required'</span>),
+    
+    <span class="function">body</span>(<span class="string">'price'</span>)
+        .<span class="function">isFloat</span>({ min: <span class="string">0</span> })
+        .<span class="function">withMessage</span>(<span class="string">'Price must be a positive number'</span>),
+    
+    <span class="function">body</span>(<span class="string">'category'</span>)
+        .<span class="function">isIn</span>([<span class="string">'Electronics'</span>, <span class="string">'Clothing'</span>, <span class="string">'Books'</span>, <span class="string">'Food'</span>, <span class="string">'Other'</span>])
+        .<span class="function">withMessage</span>(<span class="string">'Invalid category'</span>)
+];
+
+<span class="comment">// ID validation</span>
+<span class="keyword">const</span> idValidation = [
+    <span class="function">param</span>(<span class="string">'id'</span>).<span class="function">isMongoId</span>().<span class="function">withMessage</span>(<span class="string">'Invalid ID format'</span>)
+];
+
+module.exports = { validate, itemValidationRules, idValidation };
+            </div>
+
+            <p>Usage in routes:</p>
+            <div class="code-block">
+<span class="keyword">const</span> { itemValidationRules, idValidation, validate } = <span class="function">require</span>(<span class="string">'../middleware/validators'</span>);
+
+router.<span class="function">post</span>(<span class="string">'/'</span>, itemValidationRules, validate, createItem);
+router.<span class="function">put</span>(<span class="string">'/:id'</span>, idValidation, itemValidationRules, validate, updateItem);
+            </div>
+
+            <div class="section-break"></div>
+
+            <h1>Chapter 12: Testing Your Application</h1>
+
+            <h2>12.1 Setting Up Jest & Supertest</h2>
+
+            <div class="code-block">
+npm install --save-dev jest supertest mongodb-memory-server
+            </div>
+
+            <p>Add to package.json:</p>
+            <div class="code-block">
+{
+    "scripts": {
+        "test": "jest --watchAll --verbose"
+    },
+    "jest": {
+        "testEnvironment": "node",
+        "coveragePathIgnorePatterns": ["/node_modules/"]
+    }
+}
+            </div>
+
+            <h2>12.2 Backend Testing</h2>
+
+            <h3>Test Setup</h3>
+            <div class="code-block">
+<span class="comment">// server/tests/setup.js</span>
+<span class="keyword">const</span> { MongoMemoryServer } = <span class="function">require</span>(<span class="string">'mongodb-memory-server'</span>);
+<span class="keyword">const</span> mongoose = <span class="function">require</span>(<span class="string">'mongoose'</span>);
+
+<span class="keyword">let</span> mongoServer;
+
+<span class="function">beforeAll</span>(<span class="keyword">async</span> () => {
+    mongoServer = <span class="keyword">await</span> MongoMemoryServer.<span class="function">create</span>();
+    <span class="keyword">const</span> uri = mongoServer.<span class="function">getUri</span>();
+    <span class="keyword">await</span> mongoose.<span class="function">connect</span>(uri);
+});
+
+<span class="function">afterAll</span>(<span class="keyword">async</span> () => {
+    <span class="keyword">await</span> mongoose.<span class="function">disconnect</span>();
+    <span class="keyword">await</span> mongoServer.<span class="function">stop</span>();
+});
+
+<span class="function">afterEach</span>(<span class="keyword">async</span> () => {
+    <span class="keyword">const</span> collections = mongoose.connection.collections;
+    <span class="keyword">for</span> (<span class="keyword">const</span> key <span class="keyword">in</span> collections) {
+        <span class="keyword">await</span> collections[key].<span class="function">deleteMany</span>();
+    }
+});
+            </div>
+
+            <h3>API Tests</h3>
+            <div class="code-block">
+<span class="comment">// server/tests/items.test.js</span>
+<span class="keyword">const</span> request = <span class="function">require</span>(<span class="string">'supertest'</span>);
+<span class="keyword">const</span> app = <span class="function">require</span>(<span class="string">'../server'</span>);
+<span class="keyword">const</span> Item = <span class="function">require</span>(<span class="string">'../models/Item'</span>);
+
+<span class="function">describe</span>(<span class="string">'Item API'</span>, () => {
+    <span class="function">describe</span>(<span class="string">'GET /api/items'</span>, () => {
+        <span class="function">it</span>(<span class="string">'should return all items'</span>, <span class="keyword">async</span> () => {
+            <span class="keyword">await</span> Item.<span class="function">create</span>([
+                { name: <span class="string">'Item 1'</span>, description: <span class="string">'Desc 1'</span>, price: <span class="string">10</span>, category: <span class="string">'Books'</span> },
+                { name: <span class="string">'Item 2'</span>, description: <span class="string">'Desc 2'</span>, price: <span class="string">20</span>, category: <span class="string">'Electronics'</span> }
+            ]);
+
+            <span class="keyword">const</span> res = <span class="keyword">await</span> <span class="function">request</span>(app).<span class="function">get</span>(<span class="string">'/api/items'</span>);
+
+            <span class="function">expect</span>(res.statusCode).<span class="function">toBe</span>(<span class="string">200</span>);
+            <span class="function">expect</span>(res.body.success).<span class="function">toBe</span>(<span class="keyword">true</span>);
+            <span class="function">expect</span>(res.body.data).<span class="function">toHaveLength</span>(<span class="string">2</span>);
+        });
+    });
+
+    <span class="function">describe</span>(<span class="string">'POST /api/items'</span>, () => {
+        <span class="function">it</span>(<span class="string">'should create a new item'</span>, <span class="keyword">async</span> () => {
+            <span class="keyword">const</span> itemData = {
+                name: <span class="string">'Test Item'</span>,
+                description: <span class="string">'Test Description'</span>,
+                price: <span class="string">99.99</span>,
+                category: <span class="string">'Electronics'</span>
+            };
+
+            <span class="keyword">const</span> res = <span class="keyword">await</span> <span class="function">request</span>(app)
+                .<span class="function">post</span>(<span class="string">'/api/items'</span>)
+                .<span class="function">send</span>(itemData);
+
+            <span class="function">expect</span>(res.statusCode).<span class="function">toBe</span>(<span class="string">201</span>);
+            <span class="function">expect</span>(res.body.success).<span class="function">toBe</span>(<span class="keyword">true</span>);
+            <span class="function">expect</span>(res.body.data.name).<span class="function">toBe</span>(itemData.name);
+        });
+
+        <span class="function">it</span>(<span class="string">'should fail with invalid data'</span>, <span class="keyword">async</span> () => {
+            <span class="keyword">const</span> res = <span class="keyword">await</span> <span class="function">request</span>(app)
+                .<span class="function">post</span>(<span class="string">'/api/items'</span>)
+                .<span class="function">send</span>({});
+
+            <span class="function">expect</span>(res.statusCode).<span class="function">toBe</span>(<span class="string">400</span>);
+        });
+    });
+});
+            </div>
+
+            <h2>12.3 Frontend Testing with React Testing Library</h2>
+
+            <div class="code-block">
+npm install --save-dev @testing-library/react @testing-library/jest-dom @testing-library/user-event
+            </div>
+
+            <div class="code-block">
+<span class="comment">// client/src/components/__tests__/ItemCard.test.js</span>
+<span class="keyword">import</span> { render, screen, fireEvent } <span class="keyword">from</span> <span class="string">'@testing-library/react'</span>;
+<span class="keyword">import</span> ItemCard <span class="keyword">from</span> <span class="string">'../items/ItemCard'</span>;
+
+<span class="function">describe</span>(<span class="string">'ItemCard'</span>, () => {
+    <span class="keyword">const</span> mockItem = {
+        _id: <span class="string">'123'</span>,
+        name: <span class="string">'Test Item'</span>,
+        description: <span class="string">'Test Description'</span>,
+        price: <span class="string">99.99</span>,
+        inStock: <span class="keyword">true</span>
+    };
+
+    <span class="keyword">const</span> mockOnDelete = jest.<span class="function">fn</span>();
+
+    <span class="function">it</span>(<span class="string">'renders item details'</span>, () => {
+        <span class="function">render</span>(&lt;ItemCard item={mockItem} onDelete={mockOnDelete} /&gt;);
+        
+        <span class="function">expect</span>(screen.<span class="function">getByText</span>(<span class="string">'Test Item'</span>)).<span class="function">toBeInTheDocument</span>();
+        <span class="function">expect</span>(screen.<span class="function">getByText</span>(<span class="string">'Test Description'</span>)).<span class="function">toBeInTheDocument</span>();
+        <span class="function">expect</span>(screen.<span class="function">getByText</span>(<span class="string">'$99.99'</span>)).<span class="function">toBeInTheDocument</span>();
+    });
+
+    <span class="function">it</span>(<span class="string">'calls onDelete when delete button is clicked'</span>, () => {
+        window.confirm = jest.<span class="function">fn</span>(() => <span class="keyword">true</span>);
+        <span class="function">render</span>(&lt;ItemCard item={mockItem} onDelete={mockOnDelete} /&gt;);
+        
+        <span class="keyword">const</span> deleteButton = screen.<span class="function">getByText</span>(<span class="string">'Delete'</span>);
+        fireEvent.<span class="function">click</span>(deleteButton);
+        
+        <span class="function">expect</span>(mockOnDelete).<span class="function">toHaveBeenCalledWith</span>(mockItem._id);
+    });
+});
+            </div>
+
+            <div class="section-break"></div>
+
+            <h1>Chapter 13: Deployment & Production Best Practices</h1>
+
+            <h2>13.1 Environment Configuration</h2>
+
+            <h3>Production Environment Variables</h3>
+            <div class="code-block">
+<span class="comment"># .env.production</span>
+NODE_ENV=production
+PORT=5000
+MONGODB_URI=your_production_mongodb_uri
+JWT_SECRET=your_super_secure_secret_key
+CLIENT_URL=https://yourapp.com
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+            </div>
+
+            <h2>13.2 Security Best Practices</h2>
+
+            <p>Install security packages:</p>
+            <div class="code-block">
+npm install helmet express-rate-limit express-mongo-sanitize xss-clean hpp
+            </div>
+
+            <div class="code-block">
+<span class="comment">// server/server.js - Security middleware</span>
+<span class="keyword">const</span> helmet = <span class="function">require</span>(<span class="string">'helmet'</span>);
+<span class="keyword">const</span> rateLimit = <span class="function">require</span>(<span class="string">'express-rate-limit'</span>);
+<span class="keyword">const</span> mongoSanitize = <span class="function">require</span>(<span class="string">'express-mongo-sanitize'</span>);
+<span class="keyword">const</span> xss = <span class="function">require</span>(<span class="string">'xss-clean'</span>);
+<span class="keyword">const</span> hpp = <span class="function">require</span>(<span class="string">'hpp'</span>);
+
+<span class="comment">// Set security headers</span>
+app.<span class="function">use</span>(<span class="function">helmet</span>());
+
+<span class="comment">// Rate limiting</span>
+<span class="keyword">const</span> limiter = <span class="function">rateLimit</span>({
+    windowMs: <span class="string">10</span> * <span class="string">60</span> * <span class="string">1000</span>, <span class="comment">// 10 minutes</span>
+    max: <span class="string">100</span> <span class="comment">// limit each IP to 100 requests per windowMs</span>
+});
+app.<span class="function">use</span>(<span class="string">'/api'</span>, limiter);
+
+<span class="comment">// Data sanitization against NoSQL injection</span>
+app.<span class="function">use</span>(<span class="function">mongoSanitize</span>());
+
+<span class="comment">// Data sanitization against XSS</span>
+app.<span class="function">use</span>(<span class="function">xss</span>());
+
+<span class="comment">// Prevent parameter pollution</span>
+app.<span class="function">use</span>(<span class="function">hpp</span>());
+            </div>
+
+            <h2>13.3 Deployment to Heroku</h2>
+
+            <h3>Prepare Backend</h3>
+            <div class="code-block">
+<span class="comment">// Add Procfile in server directory</span>
+web: node server.js
+            </div>
+
+            <div class="code-block">
+<span class="comment">// Update package.json</span>
+{
+    "engines": {
+        "node": "18.x",
+        "npm": "9.x"
+    },
+    "scripts": {
+        "start": "node server.js",
+        "dev": "nodemon server.js"
+    }
+}
+            </div>
+
+            <h3>Deploy Commands</h3>
+            <div class="code-block">
+# Install Heroku CLI and login
+heroku login
+
+# Create Heroku app
+heroku create your-app-name
+
+# Set environment variables
+heroku config:set NODE_ENV=production
+heroku config:set MONGODB_URI=your_mongodb_uri
+heroku config:set JWT_SECRET=your_secret
+
+# Deploy
+git push heroku main
+
+# View logs
+heroku logs --tail
+            </div>
+
+            <h2>13.4 Deployment to Vercel (Frontend)</h2>
+
+            <div class="code-block">
+# Install Vercel CLI
+npm install -g vercel
+
+# Deploy
+cd client
+vercel
+
+# Set environment variables in Vercel dashboard
+REACT_APP_API_URL=https://your-backend-url.herokuapp.com/api
+            </div>
+
+            <h2>13.5 Deployment to DigitalOcean/AWS</h2>
+
+            <h3>PM2 Setup</h3>
+            <div class="code-block">
+# Install PM2 globally
+npm install -g pm2
+
+# Start application
+pm2 start server.js --name "mern-app"
+
+# Save PM2 configuration
+pm2 save
+
+# Setup startup script
+pm2 startup
+            </div>
+
+            <h3>Nginx Configuration</h3>
+            <div class="code-block">
+<span class="comment"># /etc/nginx/sites-available/your-app</span>
+server {
+    listen 80;
+    server_name your-domain.com;
+
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+
+    location /api {
+        proxy_pass http://localhost:5000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+            </div>
+
+            <div class="section-break"></div>
+
+            <h1>Chapter 14: Performance Optimization</h1>
+
+            <h2>14.1 Database Optimization</h2>
+
+            <h3>Indexing</h3>
+            <div class="code-block">
+<span class="comment">// Add indexes to frequently queried fields</span>
+itemSchema.<span class="function">index</span>({ name: <span class="string">'text'</span>, description: <span class="string">'text'</span> });
+itemSchema.<span class="function">index</span>({ category: <span class="string">1</span> });
+itemSchema.<span class="function">index</span>({ price: <span class="string">1</span> });
+itemSchema.<span class="function">index</span>({ createdAt: <span class="string">-1</span> });
+            </div>
+
+            <h3>Query Optimization</h3>
+            <div class="code-block">
+<span class="comment">// Use lean() for read-only queries</span>
+<span class="keyword">const</span> items = <span class="keyword">await</span> Item.<span class="function">find</span>().<span class="function">lean</span>();
+
+<span class="comment">// Select only needed fields</span>
+<span class="keyword">const</span> items = <span class="keyword">await</span> Item.<span class="function">find</span>().<span class="function">select</span>(<span class="string">'name price category'</span>);
+
+<span class="comment">// Use aggregation for complex queries</span>
+<span class="keyword">const</span> stats = <span class="keyword">await</span> Item.<span class="function">aggregate</span>([
+    { $match: { category: <span class="string">'Electronics'</span> }},
+    { $group: { 
+        _id: <span class="string">'$category'</span>,
+        avgPrice: { $avg: <span class="string">'$price'</span> },
+        count: { $sum: <span class="string">1</span> }
+    }}
+]);
+            </div>
+
+            <h2>14.2 Caching with Redis</h2>
+
+            <div class="code-block">
+npm install redis
+            </div>
+
+            <div class="code-block">
+<span class="comment">// server/config/redis.js</span>
+<span class="keyword">const</span> redis = <span class="function">require</span>(<span class="string">'redis'</span>);
+
+<span class="keyword">const</span> client = redis.<span class="function">createClient</span>({
+    url: process.env.REDIS_URL || <span class="string">'redis://localhost:6379'</span>
+});
+
+client.<span class="function">on</span>(<span class="string">'error'</span>, (err) => console.<span class="function">error</span>(<span class="string">'Redis Error:'</span>, err));
+client.<span class="function">connect</span>();
+
+<span class="comment">// Cache middleware</span>
+<span class="keyword">const</span> <span class="function">cache</span> = (duration) => <span class="keyword">async</span> (req, res, next) => {
+    <span class="keyword">const</span> key = <span class="string">`cache:${req.originalUrl}`</span>;
+    
+    <span class="keyword">try</span> {
+        <span class="keyword">const</span> cached = <span class="keyword">await</span> client.<span class="function">get</span>(key);
+        <span class="keyword">if</span> (cached) {
+            <span class="keyword">return</span> res.<span class="function">json</span>(JSON.<span class="function">parse</span>(cached));
+        }
+        
+        res.originalJson = res.json;
+        res.json = <span class="keyword">async</span> (data) => {
+            <span class="keyword">await</span> client.<span class="function">setEx</span>(key, duration, JSON.<span class="function">stringify</span>(data));
+            res.<span class="function">originalJson</span>(data);
+        };
+        
+        <span class="function">next</span>();
+    } <span class="keyword">catch</span> (error) {
+        <span class="function">next</span>();
+    }
+};
+
+module.exports = { client, cache };
+            </div>
+
+            <p>Usage:</p>
+            <div class="code-block">
+<span class="keyword">const</span> { cache } = <span class="function">require</span>(<span class="string">'../config/redis'</span>);
+
+<span class="comment">// Cache for 5 minutes</span>
+router.<span class="function">get</span>(<span class="string">'/'</span>, <span class="function">cache</span>(<span class="string">300</span>), getAllItems);
+            </div>
+
+            <h2>14.3 React Performance</h2>
+
+            <h3>Code Splitting</h3>
+            <div class="code-block">
+<span class="keyword">import</span> React, { lazy, Suspense } <span class="keyword">from</span> <span class="string">'react'</span>;
+
+<span class="keyword">const</span> ItemsPage = <span class="function">lazy</span>(() => <span class="keyword">import</span>(<span class="string">'./pages/ItemsPage'</span>));
+
+<span class="keyword">function</span> <span class="function">App</span>() {
+    <span class="keyword">return</span> (
+        &lt;Suspense fallback={&lt;div&gt;Loading...&lt;/div&gt;}&gt;
+            &lt;ItemsPage /&gt;
+        &lt;/Suspense&gt;
+    );
+}
+            </div>
+
+            <h3>Memoization</h3>
+            <div class="code-block">
+<span class="keyword">import</span> React, { useMemo, useCallback } <span class="keyword">from</span> <span class="string">'react'</span>;
+
+<span class="keyword">const</span> <span class="function">ItemList</span> = ({ items }) => {
+    <span class="comment">// Memoize expensive computations</span>
+    <span class="keyword">const</span> sortedItems = <span class="function">useMemo</span>(() => {
+        <span class="keyword">return</span> items.<span class="function">sort</span>((a, b) => b.price - a.price);
+    }, [items]);
+
+    <span class="comment">// Memoize callbacks</span>
+    <span class="keyword">const</span> handleDelete = <span class="function">useCallback</span>((id) => {
+        <span class="comment">// Delete logic</span>
+    }, []);
+
+    <span class="keyword">return</span> <span class="comment">// ...</span>
+};
+
+<span class="keyword">export default</span> React.<span class="function">memo</span>(ItemList);
+            </div>
+
+            <div class="section-break"></div>
+
+            <h1>Chapter 15: Real-World Project - Building a Blog Platform</h1>
+
+            <h2>15.1 Project Overview</h2>
+
+            <p>We'll build a complete blog platform with:</p>
+            <ul>
+                <li>User authentication and authorization</li>
+                <li>Create, read, update, delete blog posts</li>
+                <li>Comments system</li>
+                <li>Like/Unlike functionality</li>
+                <li>Image uploads</li>
+                <li>Tags and categories</li>
+                <li>Search and filtering</li>
+                <li>User profiles</li>
+            </ul>
+
+            <h2>15.2 Data Models</h2>
+
+            <h3>Post Model</h3>
+            <div class="code-block">
+<span class="keyword">const</span> postSchema = <span class="keyword">new</span> mongoose.<span class="function">Schema</span>({
+    title: {
+        type: String,
+        required: <span class="keyword">true</span>,
+        trim: <span class="keyword">true</span>,
+        maxlength: <span class="string">200</span>
+    },
+    slug: {
+        type: String,
+        unique: <span class="keyword">true</span>,
+        lowercase: <span class="keyword">true</span>
+    },
+    content: {
+        type: String,
+        required: <span class="keyword">true</span>
+    },
+    excerpt: {
+        type: String,
+        maxlength: <span class="string">300</span>
+    },
+    coverImage: String,
+    author: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: <span class="string">'User'</span>,
+        required: <span class="keyword">true</span>
+    },
+    category: {
+        type: String,
+        required: <span class="keyword">true</span>
+    },
+    tags: [String],
+    likes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: <span class="string">'User'</span>
+    }],
+    published: {
+        type: Boolean,
+        default: <span class="keyword">false</span>
+    },
+    views: {
+        type: Number,
+        default: <span class="string">0</span>
+    }
+}, { 
+    timestamps: <span class="keyword">true</span>,
+    toJSON: { virtuals: <span class="keyword">true</span> },
+    toObject: { virtuals: <span class="keyword">true</span> }
+});
+
+<span class="comment">// Virtual for comments</span>
+postSchema.<span class="function">virtual</span>(<span class="string">'comments'</span>, {
+    ref: <span class="string">'Comment'</span>,
+    localField: <span class="string">'_id'</span>,
+    foreignField: <span class="string">'post'</span>
+});
+
+<span class="comment">// Generate slug before saving</span>
+postSchema.<span class="function">pre</span>(<span class="string">'save'</span>, <span class="keyword">function</span>(next) {
+    <span class="keyword">if</span> (<span class="keyword">this</span>.<span class="function">isModified</span>(<span class="string">'title'</span>)) {
+        <span class="keyword">this</span>.slug = <span class="keyword">this</span>.title
+            .<span class="function">toLowerCase</span>()
+            .<span class="function">replace</span>(/[^\w\s-]/g, <span class="string">''</span>)
+            .<span class="function">replace</span>(/\s+/g, <span class="string">'-'</span>);
+    }
+    <span class="function">next</span>();
+});
+
+module.exports = mongoose.<span class="function">model</span>(<span class="string">'Post'</span>, postSchema);
+            </div>
+
+            <h3>Comment Model</h3>
+            <div class="code-block">
+<span class="keyword">const</span> commentSchema = <span class="keyword">new</span> mongoose.<span class="function">Schema</span>({
+    content: {
+        type: String,
+        required: <span class="keyword">true</span>,
+        maxlength: <span class="string">1000</span>
+    },
+    author: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: <span class="string">'User'</span>,
+        required: <span class="keyword">true</span>
+    },
+    post: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: <span class="string">'Post'</span>,
+        required: <span class="keyword">true</span>
+    },
+    parentComment: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: <span class="string">'Comment'</span>
+    }
+}, { timestamps: <span class="keyword">true</span> });
+
+module.exports = mongoose.<span class="function">model</span>(<span class="string">'Comment'</span>, commentSchema);
+            </div>
+
+            <h2>15.3 Advanced Controllers</h2>
+
+            <div class="code-block">
+<span class="comment">// server/controllers/postController.js</span>
+<span class="keyword">const</span> Post = <span class="function">require</span>(<span class="string">'../models/Post'</span>);
+<span class="keyword">const</span> asyncHandler = <span class="function">require</span>(<span class="string">'../utils/asyncHandler'</span>);
+
+<span class="comment">// Get all posts with advanced filtering</span>
+exports.<span class="function">getPosts</span> = <span class="function">asyncHandler</span>(<span class="keyword">async</span> (req, res) => {
+    <span class="keyword">const</span> page = <span class="function">parseInt</span>(req.query.page) || <span class="string">1</span>;
+    <span class="keyword">const</span> limit = <span class="function">parseInt</span>(req.query.limit) || <span class="string">10</span>;
+    <span class="keyword">const</span> skip = (page - <span class="string">1</span>) * limit;
+
+    <span class="keyword">const</span> query = { published: <span class="keyword">true</span> };
+
+    <span class="comment">// Search</span>
+    <span class="keyword">if</span> (req.query.search) {
+        query.$text = { $search: req.query.search };
+    }
+
+    <span class="comment">// Filter by category</span>
+    <span class="keyword">if</span> (req.query.category) {
+        query.category = req.query.category;
+    }
+
+    <span class="comment">// Filter by tags</span>
+    <span class="keyword">if</span> (req.query.tags) {
+        query.tags = { $in: req.query.tags.<span class="function">split</span>(<span class="string">','</span>) };
+    }
+
+    <span class="keyword">const</span> posts = <span class="keyword">await</span> Post.<span class="function">find</span>(query)
+        .<span class="function">populate</span>(<span class="string">'author'</span>, <span class="string">'name email'</span>)
+        .<span class="function">sort</span>({ createdAt: <span class="string">-1</span> })
+        .<span class="function">limit</span>(limit)
+        .<span class="function">skip</span>(skip)
+        .<span class="function">lean</span>();
+
+    <span class="keyword">const</span> total = <span class="keyword">await</span> Post.<span class="function">countDocuments</span>(query);
+
+    res.<span class="function">json</span>({
+        success: <span class="keyword">true</span>,
+        data: posts,
+        page,
+        pages: Math.<span class="function">ceil</span>(total / limit),
+        total
+    });
+});
+
+<span class="comment">// Get single post by slug</span>
+exports.<span class="function">getPost</span> = <span class="function">asyncHandler</span>(<span class="keyword">async</span> (req, res) => {
+    <span class="keyword">const</span> post = <span class="keyword">await</span> Post.<span class="function">findOne</span>({ slug: req.params.slug })
+        .<span class="function">populate</span>(<span class="string">'author'</span>, <span class="string">'name email'</span>)
+        .<span class="function">populate</span>({
+            path: <span class="string">'comments'</span>,
+            populate: { path: <span class="string">'author'</span>, select: <span class="string">'name'</span> }
+        });
+
+    <span class="keyword">if</span> (!post) {
+        <span class="keyword">return</span> res.<span class="function">status</span>(<span class="string">404</span>).<span class="function">json</span>({
+            success: <span class="keyword">false</span>,
+            message: <span class="string">'Post not found'</span>
+        });
+    }
+
+    <span class="comment">// Increment views</span>
+    post.views += <span class="string">1</span>;
+    <span class="keyword">await</span> post.<span class="function">save</span>();
+
+    res.<span class="function">json</span>({
+        success: <span class="keyword">true</span>,
+        data: post
+    });
+});
+
+<span class="comment">// Like/Unlike post</span>
+exports.<span class="function">toggleLike</span> = <span class="function">asyncHandler</span>(<span class="keyword">async</span> (req, res) => {
+    <span class="keyword">const</span> post = <span class="keyword">await</span> Post.<span class="function">findById</span>(req.params.id);
+
+    <span class="keyword">if</span> (!post) {
+        <span class="keyword">return</span> res.<span class="function">status</span>(<span class="string">404</span>).<span class="function">json</span>({
+            success: <span class="keyword">false</span>,
+            message: <span class="string">'Post not found'</span>
+        });
+    }
+
+    <span class="keyword">const</span> likeIndex = post.likes.<span class="function">indexOf</span>(req.user.id);
+
+    <span class="keyword">if</span> (likeIndex > <span class="string">-1</span>) {
+        <span class="comment">// Unlike</span>
+        post.likes.<span class="function">splice</span>(likeIndex, <span class="string">1</span>);
+    } <span class="keyword">else</span> {
+        <span class="comment">// Like</span>
+        post.likes.<span class="function">push</span>(req.user.id);
+    }
+
+    <span class="keyword">await</span> post.<span class="function">save</span>();
+
+    res.<span class="function">json</span>({
+        success: <span class="keyword">true</span>,
+        likes: post.likes.length
+    });
+});
+            </div>
+
+            <h2>15.4 Building the Blog Frontend</h2>
+
+            <h3>Post List Component</h3>
+            <div class="code-block">
+<span class="comment">// client/src/components/blog/PostList.js</span>
+<span class="keyword">import</span> React, { useState, useEffect } <span class="keyword">from</span> <span class="string">'react'</span>;
+<span class="keyword">import</span> { Link } <span class="keyword">from</span> <span class="string">'react-router-dom'</span>;
+<span class="keyword">import</span> API <span class="keyword">from</span> <span class="string">'../../services/api'</span>;
+<span class="keyword">import</span> Pagination <span class="keyword">from</span> <span class="string">'../Pagination'</span>;
+<span class="keyword">import</span> <span class="string">'./PostList.css'</span>;
+
+<span class="keyword">const</span> <span class="function">PostList</span> = () => {
+    <span class="keyword">const</span> [posts, setPosts] = <span class="function">useState</span>([]);
+    <span class="keyword">const</span> [loading, setLoading] = <span class="function">useState</span>(<span class="keyword">true</span>);
+    <span class="keyword">const</span> [page, setPage] = <span class="function">useState</span>(<span class="string">1</span>);
+    <span class="keyword">const</span> [totalPages, setTotalPages] = <span class="function">useState</span>(<span class="string">1</span>);
+
+    <span class="function">useEffect</span>(() => {
+        <span class="function">fetchPosts</span>();
+    }, [page]);
+
+    <span class="keyword">const</span> <span class="function">fetchPosts</span> = <span class="keyword">async</span> () => {
+        <span class="keyword">try</span> {
+            <span class="function">setLoading</span>(<span class="keyword">true</span>);
+            <span class="keyword">const</span> response = <span class="keyword">await</span> API.<span class="function">get</span>(<span class="string">`/posts?page=${page}&limit=10`</span>);
+            <span class="function">setPosts</span>(response.data.data);
+            <span class="function">setTotalPages</span>(response.data.pages);
+        } <span class="keyword">catch</span> (error) {
+            console.<span class="function">error</span>(error);
+        } <span class="keyword">finally</span> {
+            <span class="function">setLoading</span>(<span class="keyword">false</span>);
+        }
+    };
+
+    <span class="keyword">if</span> (loading) <span class="keyword">return</span> &lt;div&gt;Loading...&lt;/div&gt;;
+
+    <span class="keyword">return</span> (
+        &lt;div className=<span class="string">"post-list"</span>&gt;
+            {posts.<span class="function">map</span>(post => (
+                &lt;article key={post._id} className=<span class="string">"post-card"</span>&gt;
+                    {post.coverImage && (
+                        &lt;img src={post.coverImage} alt={post.title} /&gt;
+                    )}
+                    &lt;div className=<span class="string">"post-content"</span>&gt;
+                        &lt;h2&gt;
+                            &lt;Link to={<span class="string">`/posts/${post.slug}`</span>}&gt;{post.title}&lt;/Link&gt;
+                        &lt;/h2&gt;
+                        &lt;p className=<span class="string">"post-meta"</span>&gt;
+                            By {post.author.name} • {<span class="keyword">new</span> Date(post.createdAt).<span class="function">toLocaleDateString</span>()}
+                        &lt;/p&gt;
+                        &lt;p className=<span class="string">"post-excerpt"</span>&gt;{post.excerpt}&lt;/p&gt;
+                        &lt;div className=<span class="string">"post-stats"</span>&gt;
+                            &lt;span&gt;❤️ {post.likes.length}&lt;/span&gt;
+                            &lt;span&gt;👁️ {post.views}&lt;/span&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/article&gt;
+            ))}
+
+            &lt;Pagination 
+                currentPage={page}
+                totalPages={totalPages}
+                onPageChange={setPage}
+            /&gt;
+        &lt;/div&gt;
+    );
+};
+
+<span class="keyword">export default</span> PostList;
+            </div>
+
+            <h3>Post Detail Component</h3>
+            <div class="code-block">
+<span class="comment">// client/src/components/blog/PostDetail.js</span>
+<span class="keyword">import</span> React, { useState, useEffect, useContext } <span class="keyword">from</span> <span class="string">'react'</span>;
+<span class="keyword">import</span> { useParams } <span class="keyword">from</span> <span class="string">'react-router-dom'</span>;
+<span class="keyword">import</span> API <span class="keyword">from</span> <span class="string">'../../services/api'</span>;
+<span class="keyword">import</span> { AuthContext } <span class="keyword">from</span> <span class="string">'../../context/AuthContext'</span>;
+<span class="keyword">import</span> CommentSection <span class="keyword">from</span> <span class="string">'./CommentSection'</span>;
+<span class="keyword">import</span> <span class="string">'./PostDetail.css'</span>;
+
+<span class="keyword">const</span> <span class="function">PostDetail</span> = () => {
+    <span class="keyword">const</span> { slug } = <span class="function">useParams</span>();
+    <span class="keyword">const</span> { user } = <span class="function">useContext</span>(AuthContext);
+    <span class="keyword">const</span> [post, setPost] = <span class="function">useState</span>(<span class="keyword">null</span>);
+    <span class="keyword">const</span> [liked, setLiked] = <span class="function">useState</span>(<span class="keyword">false</span>);
+    <span class="keyword">const</span> [loading, setLoading] = <span class="function">useState</span>(<span class="keyword">true</span>);
+
+    <span class="function">useEffect</span>(() => {
+        <span class="function">fetchPost</span>();
+    }, [slug]);
+
+    <span class="keyword">const</span> <span class="function">fetchPost</span> = <span class="keyword">async</span> () => {
+        <span class="keyword">try</span> {
+            <span class="keyword">const</span> response = <span class="keyword">await</span> API.<span class="function">get</span>(<span class="string">`/posts/${slug}`</span>);
+            <span class="function">setPost</span>(response.data.data);
+            <span class="keyword">if</span> (user) {
+                <span class="function">setLiked</span>(response.data.data.likes.<span class="function">includes</span>(user.id));
+            }
+        } <span class="keyword">catch</span> (error) {
+            console.<span class="function">error</span>(error);
+        } <span class="keyword">finally</span> {
+            <span class="function">setLoading</span>(<span class="keyword">false</span>);
+        }
+    };
+
+    <span class="keyword">const</span> <span class="function">handleLike</span> = <span class="keyword">async</span> () => {
+        <span class="keyword">if</span> (!user) {
+            <span class="function">alert</span>(<span class="string">'Please login to like posts'</span>);
+            <span class="keyword">return</span>;
+        }
+
+        <span class="keyword">try</span> {
+            <span class="keyword">const</span> response = <span class="keyword">await</span> API.<span class="function">post</span>(<span class="string">`/posts/${post._id}/like`</span>);
+            <span class="function">setLiked</span>(!liked);
+            <span class="function">setPost</span>({ ...post, likes: { length: response.data.likes }});
+        } <span class="keyword">catch</span> (error) {
+            console.<span class="function">error</span>(error);
+        }
+    };
+
+    <span class="keyword">if</span> (loading) <span class="keyword">return</span> &lt;div&gt;Loading...&lt;/div&gt;;
+    <span class="keyword">if</span> (!post) <span class="keyword">return</span> &lt;div&gt;Post not found&lt;/div&gt;;
+
+    <span class="keyword">return</span> (
+        &lt;article className=<span class="string">"post-detail"</span>&gt;
+            {post.coverImage && (
+                &lt;img src={post.coverImage} alt={post.title} className=<span class="string">"cover-image"</span> /&gt;
+            )}
+            
+            &lt;h1&gt;{post.title}&lt;/h1&gt;
+            
+            &lt;div className=<span class="string">"post-meta"</span>&gt;
+                &lt;span&gt;By {post.author.name}&lt;/span&gt;
+                &lt;span&gt;{<span class="keyword">new</span> Date(post.createdAt).<span class="function">toLocaleDateString</span>()}&lt;/span&gt;
+                &lt;span&gt;👁️ {post.views} views&lt;/span&gt;
+            &lt;/div&gt;
+
+            &lt;div className=<span class="string">"post-tags"</span>&gt;
+                {post.tags.<span class="function">map</span>(tag => (
+                    &lt;span key={tag} className=<span class="string">"tag"</span>&gt;#{tag}&lt;/span&gt;
+                ))}
+            &lt;/div&gt;
+
+            &lt;div className=<span class="string">"post-content"</span> dangerouslySetInnerHTML={{ __html: post.content }} /&gt;
+
+            &lt;button 
+                className={<span class="string">`like-btn ${liked ? 'liked' : ''}`</span>}
+                onClick={handleLike}
+            &gt;
+                {liked ? <span class="string">'❤️'</span> : <span class="string">'🤍'</span>} {post.likes.length} Likes
+            &lt;/button&gt;
+
+            &lt;CommentSection postId={post._id} comments={post.comments} /&gt;
+        &lt;/article&gt;
+    );
+};
+
+<span class="keyword">export default</span> PostDetail;
+            </div>
+
+            <div class="section-break"></div>
+
+            <h1>Conclusion</h1>
+
+            <p>Congratulations! You've completed the comprehensive MERN Stack handbook. You now have the knowledge to:</p>
+
+            <ul>
+                <li>Build complete full-stack applications from scratch</li>
+                <li>Implement authentication and authorization</li>
+                <li>Handle file uploads and media management</li>
+                <li>Create advanced features like pagination, search, and filtering</li>
+                <li>Write tests for both frontend and backend</li>
+                <li>Deploy applications to production</li>
+                <li>Optimize performance and implement caching</li>
+                <li>Build real-world applications like blog platforms</li>
+            </ul>
+
+            <h2>Next Steps</h2>
+
+            <p><strong>Practice Building:</strong> The best way to solidify your knowledge is to build projects. Start with small applications and gradually increase complexity.</p>
+
+            <p><strong>Explore Advanced Topics:</strong></p>
+            <ul>
+                <li>GraphQL with Apollo</li>
+                <li>WebSockets with Socket.io for real-time features</li>
+                <li>Microservices architecture</li>
+                <li>Docker and Kubernetes for containerization</li>
+                <li>CI/CD pipelines</li>
+                <li>TypeScript integration</li>
+            </ul>
+
+            <p><strong>Stay Updated:</strong> The JavaScript ecosystem evolves rapidly. Follow blogs, join communities, and keep learning!</p>
+
+            <div class="note">
+                <strong>Resources:</strong>
+                <ul>
+                    <li>MongoDB Documentation: docs.mongodb.com</li>
+                    <li>Express.js Documentation: expressjs.com</li>
+                    <li>React Documentation: react.dev</li>
+                    <li>Node.js Documentation: nodejs.org</li>
+                    <li>MDN Web Docs: developer.mozilla.org</li>
+                </ul>
+            </div>
+
+            <div style="text-align: center; margin: 60px 0; padding: 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 10px;">
+                <h2 style="color: white; border: none; margin: 0;">Happy Coding!</h2>
+                <p style="margin-top: 20px; font-size: 18px;">Build amazing things with the MERN stack!</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function downloadPDF() {
+            const { jsPDF } = window.jspdf;
+            const content = document.getElementById('content');
+
+            // Show loading state
+            const btn = document.querySelector('.download-btn');
+            const originalText = btn.textContent;
+            btn.textContent = '⏳ Generating PDF...';
+            btn.disabled = true;
+
+            try {
+                const canvas = await html2canvas(content, {
+                    scale: Math.min(2, window.devicePixelRatio || 1),
+                    useCORS: true,
+                    logging: false
+                });
+
+                const imgData = canvas.toDataURL('image/png');
+
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = pdf.internal.pageSize.getHeight();
+
+                // Image width in PDF units (mm) - fit to page width
+                const imgWidth = pdfWidth;
+                // Image height in PDF units (mm) maintaining aspect ratio
+                const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+
+                // Calculate total pages
+                const totalPages = Math.ceil(imgHeight / pdfHeight);
+
+                for (let page = 0; page < totalPages; page++) {
+                    if (page > 0) pdf.addPage();
+                    // draw the full image and shift it up by one page height per page
+                    const y = -page * pdfHeight;
+                    pdf.addImage(imgData, 'PNG', 0, y, imgWidth, imgHeight);
+                }
+
+                pdf.save('MERN-Stack-Handbook.pdf');
+            } catch (error) {
+                console.error('Error generating PDF:', error);
+                alert('Error generating PDF. Please try again.');
+            } finally {
+                // Reset button
+                try {
+                    btn.textContent = originalText;
+                    btn.disabled = false;
+                } catch (e) {
+                    // ignore if button not found
+                }
+            }
+        }
+    </script>
+</body>
+</html>
